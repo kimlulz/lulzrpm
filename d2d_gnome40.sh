@@ -1,4 +1,5 @@
 #!/bin/bash
+## Gnome 40 ONLY
 if has_command apt; then
     sudo apt install -y gnome-tweaks gettext
   elif has_command dnf; then
