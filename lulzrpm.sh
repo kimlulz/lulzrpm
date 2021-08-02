@@ -23,7 +23,7 @@ else
 echo "Failed to Change Mirror"
 fi
 
-## Update and Install packages 
+## Update and Install Packages 
 sudo dnf update -y
 sudo dnf install -y gnome-tweaks htop alien
 
