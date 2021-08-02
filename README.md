@@ -1,6 +1,6 @@
 # lulzrpm
 Script for configure my desktop environment | Fedora, Centos, Rocky   
-`sudo sh [script].sh` to execute script.
+`sh [script].sh` to execute script.
 
 ## lulzrpm.sh
 ### Change mirror

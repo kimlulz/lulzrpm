@@ -49,5 +49,4 @@ echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;
 neofetch" > ~/.bashrc
 cat ~/.bashrc
 echo "Finished"
-source ~/.bashrc
-
+bash
