@@ -8,3 +8,4 @@ make
 sudo make install
 wget https://dl.flathub.org/repo/appstream/org.gnome.Extensions.flatpakref
 sudo flatpak install -y org.gnome.Extensions.flatpakref
+echo "Finished.. Reboot and run Gnome Extensions to enable D2D"
