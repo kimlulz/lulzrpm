@@ -46,7 +46,7 @@ sudo dnf install -y code
 
 ## Customize .bashrc
 echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'
-neofetch" > ~/.bashrc 
+neofetch" > ~/.bashrc
 cat ~/.bashrc
 echo "Finished"
 source ~/.bashrc
