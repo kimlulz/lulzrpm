@@ -7,4 +7,4 @@ git pull
 make
 sudo make install
 wget https://dl.flathub.org/repo/appstream/org.gnome.Extensions.flatpakref
-flatpak install org.gnome.Extensions.flatpakref
+sudo flatpak install -y org.gnome.Extensions.flatpakref
