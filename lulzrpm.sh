@@ -58,6 +58,7 @@ echo ""
 		echo "**********************************************************"
 		echo "**********************************************************"
 		sudo dnf install -y epel-release 
+	
 	else 
 	echo "Failed to Change Mirror"
 	echo "Skipping..."

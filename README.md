@@ -6,38 +6,78 @@ Script for configure my desktop environment | Fedora, Centos, Rocky
 ### Change **mirror**
 ```
 if [ -f /etc/fedora-release ]; then
-	echo "Fedora Detected"
-	echo "Change mirror >>> KAIST_fedora"
-    wget https://gist.githubusercontent.com/kimlulz/e8c9d0c9e2577d4d34819292d233985b/raw/d55ba1d631d3b04a0d5b8554cab354f15d5d2ccc/change-fedora-mirror.sh
-    sudo sh change-fedora-mirror.sh
+		echo "Fedora Detected"
+		echo "Change mirror >>> KAIST"
+    		## Init.
+			BASE_REPOS=/etc/yum.repos.d/fedora.repo
+			KAIST="ftp.kaist.ac.kr\/fedora"
+			REPOS=${KAIST}
+			releasever=$(cat /etc/fedora-release | tr -dc '0-9.'|cut -d \. -f1)
+			basearch=x86_64
+			FULL_REPOS="http:\/\/${REPOS}\/${releasever}\/BaseOS\/${basearch}\/os"
+			## Process
+			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS}/" ${BASE_REPOS} 
+			## Update
+			sudo yum repolist baseos -v
 
-elif [ -f /etc/rocky-release ]; then
-	echo "Rocky Linux Detected"
-	echo "Change mirror >>> NaverCloud_Rocky"
-	wget https://gist.githubusercontent.com/kimlulz/742b304736d48a569bcc9be71113c294/raw/6c964cf843d05883f8f4eb438af33fa59a04f84d/change-rocklinux-mirror.sh
-	sudo sh change-rocklinux-mirror.sh
+	elif [ -f /etc/rocky-release ]; then
+		echo "Rocky Linux Detected"
+		echo "Change mirror >>> NAVER"
+			## Init.
+			REPOS_FILES="AppStream BaseOS"
+			NAVER="mirror.navercorp.com\/rocky"
+			REMOTE_REPOS=${NAVER}
+			releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
+			basearch=x86_64
+			for i in ${REPOS_FILES};do
+			R="/etc/yum.repos.d/Rocky-${i}.repo";
+			FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
+			## Process
+			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+			done
+			## Update
+			sudo yum check-update
+			sudo yum repolist baseos -v
+			sudo yum repolist appstream -v
+			## Check
+			echo "**********************************************************"
+			echo "**********************************************************"
+			cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
+			echo "**********************************************************"
+			echo "**********************************************************"
+			sudo dnf install -y epel-release 
+
+	elif [ -f /etc/centos-release ]; then
+		echo "CentOS Detected"
+		echo "Change mirror >>> NAVER"
+		sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+		sudo yum update
+		## Check
+		echo "**********************************************************"
+		echo "**********************************************************"
+		cat /etc/yum.repos.d/CentOS-Linux-BaseOS.repo | grep navercorp
+		echo "**********************************************************"
+		echo "**********************************************************"
+		sudo dnf install -y epel-release 
 	
-elif [ -f /etc/centos-release ]; then
-	echo "CentOS Detected"
-	echo "Change mirror >>> KAKAO_CentOS"
-    wget https://gist.githubusercontent.com/kimlulz/f8b98bf6d2ee21332ee4d183030f55a2/raw/7c503726b5c234beb576d7c85a3a683cc1cc2999/change-centos-mirror.sh
-    sudo sh change-centos-mirror.sh -k
-else 
-echo "Failed to Change Mirror"
-fi
+	else 
+	echo "Failed to Change Mirror"
+	echo "Skipping..."
+	fi
 ```
 
 ### **[DNF]** Update and Install Packages
 `sudo dnf update -y`   
-`sudo dnf install -y gnome-tweaks htop alien`   
+`sudo dnf install -y gnome-tweaks htop alien make`   
+
+#### **[RPM]** Install Whale Browser(Naver) from whale.naver.com | FEDORA ONLY
+Install package(DEB) from whale.naver.com  
+It will only be installed in fedora..
+`sudo alien -r naver-whale-stable_amd64.deb` Convert DEB to RPM    
+`sudo rpm -Uvh --force naver-*.rpm` Install RPM Locally
 
 ### **[GIT]** Install Neofetch from Github
 cuz official repo has old packages.   
-
-### **[RPM]** Install Whale Browser(Naver) from whale.naver.com
-Install package(DEB) from whale.naver.com   
-`sudo alien -r naver-whale-stable_amd64.deb` Convert DEB to RPM    
-`sudo rpm -Uvh --force naver-*.rpm` Install RPM Locally
 
 ### **[DNF]** Install VSCODE from MS REPO
 Refer to `https://code.visualstudio.com/docs/setup/linux`    
