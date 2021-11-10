@@ -2,6 +2,7 @@
 ## For Fedora, Rocky, CentOS
 
 echo "root@lulzrpm $ Change Mirror"
+echo ""
 ## Change Mirror
 	if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
@@ -40,9 +41,7 @@ echo "root@lulzrpm $ Change Mirror"
 			## Check
 			echo "**********************************************************"
 			echo "**********************************************************"
-			echo "**********************************************************"
 			cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
-			echo "**********************************************************"
 			echo "**********************************************************"
 			echo "**********************************************************"
 			sudo dnf install -y epel-release 
@@ -55,9 +54,7 @@ echo "root@lulzrpm $ Change Mirror"
 		## Check
 		echo "**********************************************************"
 		echo "**********************************************************"
-		echo "**********************************************************"
 		cat /etc/yum.repos.d/CentOS-Linux-BaseOS.repo | grep navercorp
-		echo "**********************************************************"
 		echo "**********************************************************"
 		echo "**********************************************************"
 		sudo dnf install -y epel-release 
@@ -65,8 +62,10 @@ echo "root@lulzrpm $ Change Mirror"
 	echo "Failed to Change Mirror"
 	echo "Skipping..."
 	fi
+echo ""
 
 echo "DNF@lulzrpm $ Update and Install Packages" 
+echo ""
 sudo dnf upgrade -y
 sudo dnf install -y --skip-broken gnome-tweaks htop make
 if [ -f /etc/fedora-release ]; then
@@ -77,26 +76,38 @@ if [ -f /etc/fedora-release ]; then
 	#elif [ -f /etc/rocky-release ]; then
 		#echo "Rocky Linux Detected"
 		#	sudo dnf install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/a/alien-8.95-14.el8.noarch.rpm
-	else 
+	else
+		echo "**********************************************************"
+		echo "**********************************************************" 
 		echo "Can't install some packages because of dependencies"
+		echo "**********************************************************"
+		echo "**********************************************************"
 	fi
-
+echo ""
 
 echo "GIT@lulzrpm $ Install neofetch from Github"
+echo ""
 git clone https://github.com/dylanaraps/neofetch
 cd neofetch
 sudo make install
 cd ..
+echo ""
 
 echo "DNF@lulzrpm $ Install VSCode from MS YUM_Repo"
+echo ""
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 dnf check-update
 sudo dnf install -y code
 
 echo $USERNAME"@lulzrpm $ Customize .bashrc"
+echo ""
 echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'
 neofetch" > ~/.bashrc
+echo "**********************************************************"
+echo "**********************************************************"
 cat ~/.bashrc
+echo "**********************************************************"
+echo "**********************************************************"
 echo "Finished"
 bash
