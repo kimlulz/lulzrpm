@@ -68,7 +68,7 @@ echo "root@lulzrpm $ Change Mirror"
 
 echo "DNF@lulzrpm $ Update and Install Packages" 
 sudo dnf update -y
-sudo dnf install -y --skip-broken gnome-tweaks htop alien
+sudo dnf install -y --skip-broken gnome-tweaks htop alien make
 
 echo "GIT@lulzrpm $ Install neofetch from Github"
 git clone https://github.com/dylanaraps/neofetch
