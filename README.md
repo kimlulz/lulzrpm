@@ -71,8 +71,8 @@ if [ -f /etc/fedora-release ]; then
 `sudo dnf install -y gnome-tweaks htop alien make`   
 
 #### **[RPM]** Install Whale Browser(Naver) from whale.naver.com | FEDORA ONLY
-Install package(DEB) from whale.naver.com  
-It will only be installed in fedora..
+Install package(DEB) from whale.naver.com   
+It will only be installed in fedora..   
 `sudo alien -r naver-whale-stable_amd64.deb` Convert DEB to RPM    
 `sudo rpm -Uvh --force naver-*.rpm` Install RPM Locally
 
