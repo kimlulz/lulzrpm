@@ -67,13 +67,23 @@ echo "root@lulzrpm $ Change Mirror"
 	fi
 
 echo "DNF@lulzrpm $ Update and Install Packages" 
-sudo dnf update -y
-sudo dnf install -y --skip-broken gnome-tweaks htop alien make
+sudo dnf upgrade -y
+sudo dnf install -y --skip-broken gnome-tweaks htop make
+if [ -f /etc/fedora-release ]; then
+		echo "Fedora Detected"
+		echo "PASS"
+	#elif [ -f /etc/rocky-release ]; then
+		#echo "Rocky Linux Detected"
+		#	sudo dnf install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/a/alien-8.95-14.el8.noarch.rpm
+	else 
+		sudo dnf install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/a/alien-8.95-14.el8.noarch.rpm
+	fi
+
 
 echo "GIT@lulzrpm $ Install neofetch from Github"
 git clone https://github.com/dylanaraps/neofetch
 cd neofetch
-sudo make install
+make install
 cd ..
 
 echo "RPM@lulzrpm $ Install Whale Browser(Naver) from whale.naver.com"
