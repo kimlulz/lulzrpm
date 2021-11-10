@@ -14,9 +14,9 @@ echo "root@lulzrpm $ Change Mirror"
 			basearch=x86_64
 			FULL_REPOS="http:\/\/${REPOS}\/${releasever}\/BaseOS\/${basearch}\/os"
 			## Process
-			sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS}/" ${BASE_REPOS} 
+			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS}/" ${BASE_REPOS} 
 			## Update
-			yum repolist baseos -v
+			sudo yum repolist baseos -v
 
 	elif [ -f /etc/rocky-release ]; then
 		echo "Rocky Linux Detected"
@@ -31,12 +31,12 @@ echo "root@lulzrpm $ Change Mirror"
 			R="/etc/yum.repos.d/Rocky-${i}.repo";
 			FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
 			## Process
-			sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
 			done
 			## Update
-			yum check-update
-			yum repolist baseos -v
-			yum repolist appstream -v
+			sudo yum check-update
+			sudo yum repolist baseos -v
+			sudo yum repolist appstream -v
 			## Check
 			echo "**********************************************************"
 			echo "**********************************************************"
@@ -50,8 +50,8 @@ echo "root@lulzrpm $ Change Mirror"
 	elif [ -f /etc/centos-release ]; then
 		echo "CentOS Detected"
 		echo "Change mirror >>> NAVER"
-		sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-		yum update
+		sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+		sudo yum update
 		## Check
 		echo "**********************************************************"
 		echo "**********************************************************"
