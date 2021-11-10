@@ -1,42 +1,65 @@
 #!/bin/bash
 ## For Fedora, Rocky, CentOS
 
+echo "root@lulzrpm $ Change Mirror"
 ## Change Mirror
 	if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
-		echo "Change mirror >>> KAIST_fedora"
-    		wget https://gist.githubusercontent.com/kimlulz/e8c9d0c9e2577d4d34819292d233985b/raw/d55ba1d631d3b04a0d5b8554cab354f15d5d2ccc/change-fedora-mirror.sh
-    		sudo sh change-fedora-mirror.sh
+		echo "Change mirror >>> KAIST"
+    		## Init.
+			BASE_REPOS=/etc/yum.repos.d/fedora.repo
+			KAIST="ftp.kaist.ac.kr\/fedora"
+			REPOS=${KAIST}
+			releasever=$(cat /etc/fedora-release | tr -dc '0-9.'|cut -d \. -f1)
+			basearch=x86_64
+			FULL_REPOS="http:\/\/${REPOS}\/${releasever}\/BaseOS\/${basearch}\/os"
+			## Process
+			sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS}/" ${BASE_REPOS} 
+			## Update
+			yum repolist baseos -v
 
 	elif [ -f /etc/rocky-release ]; then
 		echo "Rocky Linux Detected"
-		echo "Change mirror >>> NaverCloud_Rocky"
-		wget https://gist.githubusercontent.com/kimlulz/742b304736d48a569bcc9be71113c294/raw/6c964cf843d05883f8f4eb438af33fa59a04f84d/change-rocklinux-mirror.sh
-		sudo sh change-rocklinux-mirror.sh
-		## REPOS_FILES="AppStream BaseOS"
-		## NAVER="mirror.navercorp.com\/rocky"
-		## REMOTE_REPOS=${NAVER}
-		## releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
-		## basearch=x86_64
-		## for i in ${REPOS_FILES};do
-		##	R="/etc/yum.repos.d/Rocky-${i}.repo";
-		##	FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
-		##	sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
-		## done
-		## yum check-update
-		## yum repolist baseos -v
-		## yum repolist appstream -v
-		## NOT TESTED!!
-		sudo dnf install -y epel-release 
+		echo "Change mirror >>> NAVER"
+			## Init.
+			REPOS_FILES="AppStream BaseOS"
+			NAVER="mirror.navercorp.com\/rocky"
+			REMOTE_REPOS=${NAVER}
+			releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
+			basearch=x86_64
+			for i in ${REPOS_FILES};do
+			R="/etc/yum.repos.d/Rocky-${i}.repo";
+			FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
+			## Process
+			sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+			done
+			## Update
+			yum check-update
+			yum repolist baseos -v
+			yum repolist appstream -v
+			## Check
+			echo "**********************************************************"
+			echo "**********************************************************"
+			echo "**********************************************************"
+			cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
+			echo "**********************************************************"
+			echo "**********************************************************"
+			echo "**********************************************************"
+			sudo dnf install -y epel-release 
+
 	elif [ -f /etc/centos-release ]; then
 		echo "CentOS Detected"
-		echo "Change mirror >>> KAKAO_CentOS"
-    		wget https://gist.githubusercontent.com/kimlulz/f8b98bf6d2ee21332ee4d183030f55a2/raw/7c503726b5c234beb576d7c85a3a683cc1cc2999/change-centos-mirror.sh
-    		sudo sh change-centos-mirror.sh -k
-		## Naver Mirror FOR TEST ONLY
-		## sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-		## yum update
-		## NOT TESTED!!!!!
+		echo "Change mirror >>> NAVER"
+		sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+		yum update
+		## Check
+		echo "**********************************************************"
+		echo "**********************************************************"
+		echo "**********************************************************"
+		cat /etc/yum.repos.d/CentOS-Linux-BaseOS.repo | grep navercorp
+		echo "**********************************************************"
+		echo "**********************************************************"
+		echo "**********************************************************"
 		sudo dnf install -y epel-release 
 	else 
 	echo "Failed to Change Mirror"
@@ -45,7 +68,7 @@
 
 echo "DNF@lulzrpm $ Update and Install Packages" 
 sudo dnf update -y
-sudo dnf install -y gnome-tweaks htop alien
+sudo dnf install -y --skip-broken gnome-tweaks htop alien
 
 echo "GIT@lulzrpm $ Install neofetch from Github"
 git clone https://github.com/dylanaraps/neofetch
