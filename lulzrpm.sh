@@ -13,8 +13,21 @@
 		echo "Change mirror >>> NaverCloud_Rocky"
 		wget https://gist.githubusercontent.com/kimlulz/742b304736d48a569bcc9be71113c294/raw/6c964cf843d05883f8f4eb438af33fa59a04f84d/change-rocklinux-mirror.sh
 		sudo sh change-rocklinux-mirror.sh
+		## REPOS_FILES="AppStream BaseOS"
+		## NAVER="mirror.navercorp.com\/rocky"
+		## REMOTE_REPOS=${NAVER}
+		## releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
+		## basearch=x86_64
+		## for i in ${REPOS_FILES};do
+		##	R="/etc/yum.repos.d/Rocky-${i}.repo";
+		##	FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
+		##	sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+		## done
+		## yum check-update
+		## yum repolist baseos -v
+		## yum repolist appstream -v
+		## NOT TESTED!!
 		sudo dnf install -y epel-release 
-	
 	elif [ -f /etc/centos-release ]; then
 		echo "CentOS Detected"
 		echo "Change mirror >>> KAKAO_CentOS"
@@ -22,6 +35,7 @@
     		sudo sh change-centos-mirror.sh -k
 		## Naver Mirror FOR TEST ONLY
 		## sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+		## yum update
 		## NOT TESTED!!!!!
 		sudo dnf install -y epel-release 
 	else 
