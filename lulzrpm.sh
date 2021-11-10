@@ -50,6 +50,7 @@ echo ""
 		echo "CentOS Detected"
 		echo "Change mirror >>> NAVER"
 		sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+		## Update
 		sudo yum update
 		## Check
 		echo "**********************************************************"
