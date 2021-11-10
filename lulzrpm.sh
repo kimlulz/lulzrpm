@@ -71,25 +71,22 @@ sudo dnf upgrade -y
 sudo dnf install -y --skip-broken gnome-tweaks htop make
 if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
-		echo "PASS"
+		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
+		sudo alien -r naver-whale-stable_amd64.deb
+		sudo rpm -Uvh --force naver-*.rpm
 	#elif [ -f /etc/rocky-release ]; then
 		#echo "Rocky Linux Detected"
 		#	sudo dnf install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/a/alien-8.95-14.el8.noarch.rpm
 	else 
-		sudo dnf install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/a/alien-8.95-14.el8.noarch.rpm
+		echo "Can't install some packages because of dependencies"
 	fi
 
 
 echo "GIT@lulzrpm $ Install neofetch from Github"
 git clone https://github.com/dylanaraps/neofetch
 cd neofetch
-make install
+sudo make install
 cd ..
-
-echo "RPM@lulzrpm $ Install Whale Browser(Naver) from whale.naver.com"
-wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
-sudo alien -r naver-whale-stable_amd64.deb
-sudo rpm -Uvh --force naver-*.rpm
 
 echo "DNF@lulzrpm $ Install VSCode from MS YUM_Repo"
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
