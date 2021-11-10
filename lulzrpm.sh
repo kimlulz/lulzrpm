@@ -81,7 +81,7 @@ if [ -f /etc/fedora-release ]; then
 	else
 		echo "**********************************************************"
 		echo "**********************************************************" 
-		echo "Can't install some packages because of dependencies"
+		echo "Can't install some packages because of package dependencies"
 		echo "**********************************************************"
 		echo "**********************************************************"
 	fi
