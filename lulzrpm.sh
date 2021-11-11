@@ -76,7 +76,7 @@ if [ -f /etc/fedora-release ]; then
 
 	elif [ -f /etc/rocky-release ]; then
 		echo "Rocky Linux Detected"
-		sudo dnf --enablerepo install alien
+		sudo dnf install alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
