@@ -40,7 +40,9 @@ echo ""
 				sudo yum repolist appstream -v
 			## Check
 				echo "**********************************************************"
+				echo "************************!RESULT!**************************"
 				sudo yum repolist baseos -v | grep navercorp
+				echo "************************!!PASS!!**************************"
 				echo "**********************************************************"
 			sudo dnf install -y epel-release dnf-plugins-core
 			sudo dnf config-manager --set-enabled powertools 
@@ -52,9 +54,11 @@ echo ""
 		## Update
 			sudo yum update
 		## Check
-			echo "**********************************************************"
-			sudo yum repolist baseos -v | grep navercorp
-			echo "**********************************************************"
+				echo "**********************************************************"
+				echo "************************!RESULT!**************************"
+				sudo yum repolist baseos -v | grep navercorp
+				echo "************************!!PASS!!**************************"
+				echo "**********************************************************"
 		sudo dnf install -y epel-release 
 	
 	else 
@@ -69,14 +73,14 @@ sudo dnf upgrade -y
 sudo dnf install -y --skip-broken gnome-tweaks htop make git
 if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
-		sudo dnf install alien
+		sudo dnf install -y alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
 
 	elif [ -f /etc/rocky-release ]; then
 		echo "Rocky Linux Detected"
-		sudo dnf install alien
+		sudo dnf install -y alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
