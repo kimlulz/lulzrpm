@@ -70,7 +70,7 @@ echo ""
 echo "DNF@lulzrpm $ Update and Install Packages" 
 echo ""
 sudo dnf upgrade -y
-sudo dnf install -y --skip-broken gnome-tweaks htop make git alien
+sudo dnf install -y --skip-broken gnome-tweaks htop make git
 if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
@@ -79,6 +79,7 @@ if [ -f /etc/fedora-release ]; then
 
 	elif [ -f /etc/rocky-release ]; then
 		echo "Rocky Linux Detected"
+		sudo dnf --enablerepo install alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
