@@ -134,7 +134,10 @@ echo ""
 echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
 echo ""
 sudo rm -rf neofetch
-if [ -f naver-whale-stable* ] then
+if [ -f /etc/fedora-release ] then
+	sudo dnf remove -y firefox*	
+	sudo rm -rf naver-whale-stable*
+elif [ -f /etc/rocky-release ] then
 	sudo dnf remove -y firefox*	
 	sudo rm -rf naver-whale-stable*
 else
