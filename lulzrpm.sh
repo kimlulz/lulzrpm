@@ -23,42 +23,42 @@ echo ""
 		echo "Rocky Linux Detected"
 		echo "Change mirror >>> NAVER"
 			## Init.
-			REPOS_FILES="AppStream BaseOS"
-			NAVER="mirror.navercorp.com\/rocky"
-			REMOTE_REPOS=${NAVER}
-			releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
-			basearch=x86_64
-			for i in ${REPOS_FILES};do
-			R="/etc/yum.repos.d/Rocky-${i}.repo";
-			FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
+				REPOS_FILES="AppStream BaseOS"
+				NAVER="mirror.navercorp.com\/rocky"
+				REMOTE_REPOS=${NAVER}
+				releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
+				basearch=x86_64
+				for i in ${REPOS_FILES};do
+				R="/etc/yum.repos.d/Rocky-${i}.repo";
+				FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
 			## Process
-			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+				sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
 			done
 			## Update
-			sudo yum check-update
-			sudo yum repolist baseos -v
-			sudo yum repolist appstream -v
+				sudo yum check-update
+				sudo yum repolist baseos -v
+				sudo yum repolist appstream -v
 			## Check
-			echo "**********************************************************"
-			echo "**********************************************************"
-			cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
-			echo "**********************************************************"
-			echo "**********************************************************"
+				echo "**********************************************************"
+				cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
+				# or
+				# sudo yum repolist baseos -v | grep navercorp
+				echo "**********************************************************"
 			sudo dnf install -y epel-release dnf-plugins-core
 			sudo dnf config-manager --set-enabled powertools 
 
 	elif [ -f /etc/centos-release ]; then
 		echo "CentOS Detected"
 		echo "Change mirror >>> NAVER"
-		sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
 		## Update
-		sudo yum update
+			sudo yum update
 		## Check
-		echo "**********************************************************"
-		echo "**********************************************************"
-		cat /etc/yum.repos.d/CentOS-Linux-BaseOS.repo | grep navercorp
-		echo "**********************************************************"
-		echo "**********************************************************"
+			echo "**********************************************************"
+			cat /etc/yum.repos.d/CentOS-Linux-BaseOS.repo | grep navercorp
+			# or
+			# sudo yum repolist baseos -v | grep navercorp
+			echo "**********************************************************"
 		sudo dnf install -y epel-release 
 	
 	else 
@@ -117,4 +117,18 @@ cat ~/.bashrc
 echo "**********************************************************"
 echo "**********************************************************"
 echo "Finished"
+echo ""
+
+echo $USERNAME"@lulzrpm $ Clean"
+echo ""
+sudo rm -rf neofetch/.
+if [ -f naver-*/] then
+	sudo dnf remove firefox*
+	sudo rm -rf naver-*/
+	## sudo rm -rf naver-*.rpm 필요한가??
+else
+	sudo rm -rf naver-*
+fi
+echo ""
+
 source ~/.bashrc
