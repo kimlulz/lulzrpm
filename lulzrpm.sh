@@ -69,20 +69,29 @@ echo ""
 echo "DNF@lulzrpm $ Update and Install Packages" 
 echo ""
 sudo dnf upgrade -y
-sudo dnf install -y --skip-broken gnome-tweaks htop make
+sudo dnf install -y --skip-broken gnome-tweaks htop make git
 if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
-	#elif [ -f /etc/rocky-release ]; then
-		#echo "Rocky Linux Detected"
-		#	sudo dnf install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/a/alien-8.95-14.el8.noarch.rpm
+
+	elif [ -f /etc/rocky-release ]; then
+		echo "Rocky Linux Detected"
+		## Install alien(Package converter) from unofficial source
+		sudo dnf install perl perl-ExtUtils-Embed rpmbuild
+		git clone https://github.com/cevatbostancioglu/alien.git
+		cd alien && sudo perl Makefile.PL && sudo make && sudo make install
+		cd .. && sudo rm -rf /alien
+		## Install Browser
+		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
+		alien -r naver-whale-stable_amd64.deb
+		sudo rpm -Uvh --force naver-*.rpm
 	else
 		echo "**********************************************************"
-		echo "**********************************************************" 
+		echo "************************!!SKIP!!**************************"
 		echo "Can't install some packages because of package dependencies"
-		echo "**********************************************************"
+		echo "************************!!SKIP!!**************************"
 		echo "**********************************************************"
 	fi
 echo ""
