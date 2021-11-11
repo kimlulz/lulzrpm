@@ -40,9 +40,7 @@ echo ""
 				sudo yum repolist appstream -v
 			## Check
 				echo "**********************************************************"
-				cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
-				# or
-				# sudo yum repolist baseos -v | grep navercorp
+				sudo yum repolist baseos -v | grep navercorp
 				echo "**********************************************************"
 			sudo dnf install -y epel-release dnf-plugins-core
 			sudo dnf config-manager --set-enabled powertools 
@@ -55,9 +53,7 @@ echo ""
 			sudo yum update
 		## Check
 			echo "**********************************************************"
-			cat /etc/yum.repos.d/CentOS-Linux-BaseOS.repo | grep navercorp
-			# or
-			# sudo yum repolist baseos -v | grep navercorp
+			sudo yum repolist baseos -v | grep navercorp
 			echo "**********************************************************"
 		sudo dnf install -y epel-release 
 	
@@ -124,6 +120,7 @@ echo ""
 sudo rm -rf neofetch/.
 if [ -f naver-*/] then
 	sudo dnf remove firefox*
+	sudo dnf autoremove
 	sudo rm -rf naver-*/
 	## sudo rm -rf naver-*.rpm 필요한가??
 else
