@@ -82,7 +82,7 @@ if [ -f /etc/fedora-release ]; then
 		echo "Rocky Linux Detected"
 		sudo dnf install -y alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
-		alien -r naver-whale-stable_amd64.deb
+		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
 	else
 		echo "**********************************************************"
@@ -127,7 +127,8 @@ echo ""
 #if [ -f naver-*/] then
 #	sudo dnf remove firefox*
 #	sudo dnf autoremove
-#	sudo rm -rf naver-*/
+#	sudo rm -rf naver-whale-*
+#	sudo rm -rf naver-whale-stable_amd64*
 	## sudo rm -rf naver-*.rpm 필요한가??
 #else
 #	sudo rm -rf naver-*
