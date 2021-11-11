@@ -69,6 +69,7 @@ sudo dnf upgrade -y
 sudo dnf install -y --skip-broken gnome-tweaks htop make git
 if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
+		sudo dnf install alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
