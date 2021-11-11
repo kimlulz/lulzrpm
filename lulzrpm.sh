@@ -82,14 +82,18 @@ echo ""
 sudo dnf upgrade -y
 sudo dnf install -y --skip-broken gnome-tweaks htop make git
 if [ -f /etc/fedora-release ]; then
+		echo "${bold}********************"
 		echo "Fedora Detected"
+		echo "********************${normal}"
 		sudo dnf install -y alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
 
 	elif [ -f /etc/rocky-release ]; then
+		echo "${bold}********************"
 		echo "Rocky Linux Detected"
+		echo "********************${normal}"
 		sudo dnf install -y alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
@@ -134,7 +138,7 @@ echo ""
 echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
 echo ""
 sudo rm -rf neofetch
-if [ -f naver-whale-stable ]; then
+if [ -f /opt/naver/whale/whale/whale ]; then
 	sudo dnf remove -y firefox*	
 	sudo rm -rf naver-whale-stable*
 else
