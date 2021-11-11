@@ -1,11 +1,17 @@
 #!/bin/bash
 ## For Fedora, Rocky, CentOS
+##INIT S.
+bold=$(tput bold)
+normal=$(tput sgr0)
+##INIT E.
 
 echo "root@lulzrpm $ Change Mirror"
 echo ""
 ## Change Mirror
 	if [ -f /etc/fedora-release ]; then
+		echo "${bold}********************"
 		echo "Fedora Detected"
+		echo "********************${normal}"
 		echo "Change mirror >>> KAIST"
     		## Init.
 			BASE_REPOS=/etc/yum.repos.d/fedora.repo
@@ -20,7 +26,9 @@ echo ""
 			sudo yum repolist baseos -v
 
 	elif [ -f /etc/rocky-release ]; then
+		echo "${bold}********************"
 		echo "Rocky Linux Detected"
+		echo "********************${normal}"
 		echo "Change mirror >>> NAVER"
 			## Init.
 				REPOS_FILES="AppStream BaseOS"
@@ -39,26 +47,28 @@ echo ""
 				sudo yum repolist baseos -v
 				sudo yum repolist appstream -v
 			## Check
-				echo "**********************************************************"
+				echo "${bold}**********************************************************"
 				echo "************************!RESULT!**************************"
 				sudo yum repolist baseos -v | grep navercorp
 				echo "************************!!PASS!!**************************"
-				echo "**********************************************************"
+				echo "**********************************************************${normal}"
 			sudo dnf install -y epel-release dnf-plugins-core
 			sudo dnf config-manager --set-enabled powertools 
 
 	elif [ -f /etc/centos-release ]; then
+		echo "${bold}********************"
 		echo "CentOS Detected"
+		echo "********************${normal}"
 		echo "Change mirror >>> NAVER"
 			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=http:\/\/mirror.navercorp.com\/centos\/$(cat /etc/centos-release | tr -dc '0-9.'|cut -d \. -f1)\/BaseOS\/x86_64\/os/" /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
 		## Update
 			sudo yum update
 		## Check
-				echo "**********************************************************"
+				echo "${bold}**********************************************************"
 				echo "************************!RESULT!**************************"
 				sudo yum repolist baseos -v | grep navercorp
 				echo "************************!!PASS!!**************************"
-				echo "**********************************************************"
+				echo "**********************************************************${normal}"
 		sudo dnf install -y epel-release 
 	
 	else 
@@ -85,11 +95,11 @@ if [ -f /etc/fedora-release ]; then
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
 	else
-		echo "**********************************************************"
+		echo "${bold}**********************************************************"
 		echo "************************!!SKIP!!**************************"
 		echo "Can't install some packages because of package dependencies"
 		echo "************************!!SKIP!!**************************"
-		echo "**********************************************************"
+		echo "**********************************************************${normal}"
 	fi
 echo ""
 
@@ -112,27 +122,24 @@ echo $USERNAME"@lulzrpm $ Customize .bashrc"
 echo ""
 echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'
 neofetch" > ~/.bashrc
-echo "**********************************************************"
+echo "${bold}**********************************************************"
 echo "**********************************************************"
 cat ~/.bashrc
 echo "**********************************************************"
-echo "**********************************************************"
+echo "**********************************************************${normal}"
 echo "Finished"
 echo ""
 
 #STILL WIP
-#echo $USERNAME"@lulzrpm $ Clean"
-#echo ""
-#sudo rm -rf neofetch/.
-#if [ -f naver-*/] then
-#	sudo dnf remove firefox*
-#	sudo dnf autoremove
-#	sudo rm -rf naver-whale-*
-#	sudo rm -rf naver-whale-stable_amd64*
-	## sudo rm -rf naver-*.rpm 필요한가??
-#else
-#	sudo rm -rf naver-*
-#fi
+echo $USERNAME"@lulzrpm $ Clean"
+echo ""
+sudo rm -rf neofetch
+if [ -f naver-whale-stable* ] then
+	sudo dnf remove -y firefox*	
+	sudo rm -rf naver-whale-stable*
+else
+	sudo rm -rf naver-whale-stable*
+fi
 echo ""
 
 source ~/.bashrc
