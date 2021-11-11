@@ -134,7 +134,6 @@ echo "**********************************************************${normal}"
 echo "Finished"
 echo ""
 
-#STILL WIP
 echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
 echo ""
 sudo rm -rf neofetch
