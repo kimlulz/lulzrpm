@@ -138,7 +138,7 @@ echo ""
 echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
 echo ""
 sudo rm -rf neofetch
-if [ -f /opt/naver/whale/whale/ ]; then
+if [ -f /opt/naver/whale/whale ]; then
 	sudo dnf remove -y firefox*	
 	sudo rm -rf naver-whale-stable*
 else
