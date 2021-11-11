@@ -45,7 +45,8 @@ if [ -f /etc/fedora-release ]; then
 			cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
 			echo "**********************************************************"
 			echo "**********************************************************"
-			sudo dnf install -y epel-release 
+			sudo dnf install -y epel-release dnf-plugins-core
+			sudo dnf config-manager --set-enabled powertools 
 
 	elif [ -f /etc/centos-release ]; then
 		echo "CentOS Detected"
@@ -73,7 +74,6 @@ if [ -f /etc/fedora-release ]; then
 
 #### **[RPM]** Install Whale Browser(Naver) from whale.naver.com | FEDORA ONLY
 Install package(DEB) from whale.naver.com   
-It will only be installed in fedora..   
 `sudo alien -r naver-whale-stable_amd64.deb` Convert DEB to RPM    
 `sudo rpm -Uvh --force naver-*.rpm` Install RPM Locally
 
