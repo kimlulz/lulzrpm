@@ -107,10 +107,7 @@ echo "${bold}GIT@lulzrpm $ Install neofetch from Github${normal}"
 echo ""
 git clone https://github.com/dylanaraps/neofetch
 cd neofetch
-sudo make install
-cd ..
-echo ""
-
+sudo make installnaver-whale-stable
 echo "${bold}DNF@lulzrpm $ Install VSCode from MS YUM_Repo${normal}"
 echo ""
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -134,10 +131,7 @@ echo ""
 echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
 echo ""
 sudo rm -rf neofetch
-if [ -f /etc/fedora-release ] then
-	sudo dnf remove -y firefox*	
-	sudo rm -rf naver-whale-stable*
-elif [ -f /etc/rocky-release ] then
+if [ -f naver-whale-stable ]; then
 	sudo dnf remove -y firefox*	
 	sudo rm -rf naver-whale-stable*
 else
