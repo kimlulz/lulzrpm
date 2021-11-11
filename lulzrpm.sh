@@ -116,17 +116,18 @@ echo "**********************************************************"
 echo "Finished"
 echo ""
 
-echo $USERNAME"@lulzrpm $ Clean"
-echo ""
-sudo rm -rf neofetch/.
-if [ -f naver-*/] then
-	sudo dnf remove firefox*
-	sudo dnf autoremove
-	sudo rm -rf naver-*/
+#STILL WIP
+#echo $USERNAME"@lulzrpm $ Clean"
+#echo ""
+#sudo rm -rf neofetch/.
+#if [ -f naver-*/] then
+#	sudo dnf remove firefox*
+#	sudo dnf autoremove
+#	sudo rm -rf naver-*/
 	## sudo rm -rf naver-*.rpm 필요한가??
-else
-	sudo rm -rf naver-*
-fi
+#else
+#	sudo rm -rf naver-*
+#fi
 echo ""
 
 source ~/.bashrc
