@@ -145,5 +145,6 @@ else
 	sudo rm -rf ./naver-whale-stable*
 fi
 echo ""
+## 수동으로 치면 잘 되는데 왜 스크립트상에서는 안먹히냐
 
 source ~/.bashrc
