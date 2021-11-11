@@ -134,6 +134,7 @@ echo "**********************************************************${normal}"
 echo "Finished"
 echo ""
 
+## ㅆㅃ 이거 왜 작동 안함??? 
 echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
 echo ""
 sudo rm -rf neofetch
