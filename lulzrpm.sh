@@ -5,7 +5,7 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 ##INIT E.
 
-echo "root@lulzrpm $ Change Mirror"
+echo "${bold}root@lulzrpm $ Change Mirror${normal}"
 echo ""
 ## Change Mirror
 	if [ -f /etc/fedora-release ]; then
@@ -77,7 +77,7 @@ echo ""
 	fi
 echo ""
 
-echo "DNF@lulzrpm $ Update and Install Packages" 
+echo "${bold}DNF@lulzrpm $ Update and Install Packages${normal}" 
 echo ""
 sudo dnf upgrade -y
 sudo dnf install -y --skip-broken gnome-tweaks htop make git
@@ -103,7 +103,7 @@ if [ -f /etc/fedora-release ]; then
 	fi
 echo ""
 
-echo "GIT@lulzrpm $ Install neofetch from Github"
+echo "${bold}GIT@lulzrpm $ Install neofetch from Github${normal}"
 echo ""
 git clone https://github.com/dylanaraps/neofetch
 cd neofetch
@@ -111,14 +111,14 @@ sudo make install
 cd ..
 echo ""
 
-echo "DNF@lulzrpm $ Install VSCode from MS YUM_Repo"
+echo "${bold}DNF@lulzrpm $ Install VSCode from MS YUM_Repo${normal}"
 echo ""
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 sudo dnf check-update && sudo dnf upgrade
 sudo dnf install -y code
 
-echo $USERNAME"@lulzrpm $ Customize .bashrc"
+echo ${bold}$USERNAME"@lulzrpm $ Customize .bashrc${normal}"
 echo ""
 echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'
 neofetch" > ~/.bashrc
@@ -131,7 +131,7 @@ echo "Finished"
 echo ""
 
 #STILL WIP
-echo $USERNAME"@lulzrpm $ Clean"
+echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
 echo ""
 sudo rm -rf neofetch
 if [ -f naver-whale-stable* ] then
