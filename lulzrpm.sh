@@ -44,7 +44,8 @@ echo ""
 			cat /etc/yum.repos.d/Rocky-BaseOS.repo | grep navercorp
 			echo "**********************************************************"
 			echo "**********************************************************"
-			sudo dnf install -y epel-release 
+			sudo dnf install -y epel-release dnf-plugins-core
+			sudo dnf config-manager --set-enabled powertools 
 
 	elif [ -f /etc/centos-release ]; then
 		echo "CentOS Detected"
@@ -69,17 +70,15 @@ echo ""
 echo "DNF@lulzrpm $ Update and Install Packages" 
 echo ""
 sudo dnf upgrade -y
-sudo dnf install -y --skip-broken gnome-tweaks htop make git
+sudo dnf install -y --skip-broken gnome-tweaks htop make git alien
 if [ -f /etc/fedora-release ]; then
 		echo "Fedora Detected"
-		sudo dnf install -y alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
 
 	elif [ -f /etc/rocky-release ]; then
 		echo "Rocky Linux Detected"
-		sudo dnf --enablerepo=powertools install alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
