@@ -111,7 +111,7 @@ echo "${bold}GIT@lulzrpm $ Install neofetch from Github${normal}"
 echo ""
 git clone https://github.com/dylanaraps/neofetch
 cd neofetch
-sudo make installnaver-whale-stable
+sudo make install
 echo ""
 
 echo "${bold}DNF@lulzrpm $ Install VSCode from MS YUM_Repo${normal}"
