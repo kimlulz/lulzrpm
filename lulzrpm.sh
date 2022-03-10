@@ -1,32 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@kimlulz 
-kimlulz
-/
-lulzrpm
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-lulzrpm/lulzrpm.sh
-@kimlulz
-kimlulz Update lulzrpm.sh
-Latest commit 95d0f2b on 16 Nov 2021
- History
- 1 contributor
-150 lines (139 sloc)  5.55 KB
-   
 #!/bin/bash
 ## For Fedora, Rocky, CentOS
 ##INIT S.
@@ -182,16 +153,3 @@ echo ""
 ## 수동으로 치면 잘 되는데 왜 스크립트상에서는 안먹히냐
 
 source ~/.bashrc
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete
