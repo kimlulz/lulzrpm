@@ -89,6 +89,7 @@ if [ -f /etc/fedora-release ]; then
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
+		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/application/naver-whale.desktop
 
 	elif [ -f /etc/rocky-release ]; then
 		echo "${bold}********************"
@@ -98,6 +99,7 @@ if [ -f /etc/fedora-release ]; then
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
+		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/application/naver-whale.desktop
 	else
 		echo "${bold}**********************************************************"
 		echo "************************!!SKIP!!**************************"
