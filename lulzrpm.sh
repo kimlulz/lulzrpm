@@ -5,9 +5,7 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 ##INIT E.
 
-echo "${bold}root@lulzrpm $ Change Mirror${normal}"
-echo ""
-## Change Mirror
+echo "${bold}0. Change Mirror${normal}"
 	if [ -f /etc/fedora-release ]; then
 		echo "${bold}********************"
 		echo "Fedora Detected"
@@ -77,11 +75,10 @@ echo ""
 	fi
 echo ""
 
-echo "${bold}DNF@lulzrpm $ Update and Install Packages${normal}" 
-echo ""
-sudo dnf upgrade -y
-sudo dnf install -y --skip-broken gnome-tweaks htop make git
-if [ -f /etc/fedora-release ]; then
+echo "${bold}1. Update and Install Packages${normal}" 
+	sudo dnf upgrade -y
+	sudo dnf install -y --skip-broken gnome-tweaks htop make git
+	if [ -f /etc/fedora-release ]; then
 		echo "${bold}********************"
 		echo "Fedora Detected"
 		echo "********************${normal}"
@@ -109,40 +106,36 @@ if [ -f /etc/fedora-release ]; then
 	fi
 echo ""
 
-echo "${bold}GIT@lulzrpm $ Install neofetch from Github${normal}"
-echo ""
-git clone https://github.com/dylanaraps/neofetch
-cd neofetch
-sudo make install
-echo ""
+echo "${bold}2. Install neofetch from Github${normal}"
+	git clone https://github.com/dylanaraps/neofetch
+	cd neofetch
+	sudo make install
+	echo ""
 
-echo "${bold}DNF@lulzrpm $ Install VSCode from MS YUM_Repo${normal}"
-echo ""
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-sudo dnf check-update && sudo dnf upgrade
-sudo dnf install -y code
-echo ""
+echo "${bold}3. Install VSCode from MS YUM_Repo${normal}"
+	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+	sudo dnf check-update && sudo dnf upgrade
+	sudo dnf install -y code
+	echo ""
 
-echo ${bold}$USERNAME"@lulzrpm $ Customize .bashrc${normal}"
-echo "${bold}Do u want to install lolcat, fortune, cowsay?? [y, n]${normal}"
-read aws
-if [ $aws = "y" ] then
-    sudo dnf install -y npm lolcat fortune-mod cowsay
-    wget -P ~/ https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/pepe2.ascii 
-    echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'
+echo "${bold}4. Customize .bashrc${normal}"
+	echo "${bold}Do u want to install lolcat, fortune, cowsay?? [y, n]${normal}"
+	read aws
+		if [ $aws = "y" ] then
+    		sudo dnf install -y npm lolcat fortune-mod cowsay
+    		wget -P ~/ https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/pepe2.ascii 
+echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'
 fortune | cowsay -f tux | lolcat 
 neofetch --ascii ~/pepe2.ascii | lolcat" > ~/.bashrc
-else
-    wget -P ~/ https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/pepe2.ascii 
-    echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]' 
+		else
+    		wget -P ~/ https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/pepe2.ascii 
+echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]' 
 neofetch --ascii ~/pepe2.ascii" > ~/.bashrc
-fi
-echo ""
+		fi
 echo ""
 
-## ㅆㅃ 이거 왜 작동 안함??? 
-echo ${bold}$USERNAME"@lulzrpm $ Clean${normal}"
+echo "${bold}5. Clean${normal}"
 echo ""
 sudo rm -rf ./neofetch
 if [ -f /opt/naver/whale/whale ]; then
@@ -152,6 +145,5 @@ else
 	sudo rm -rf ./naver-whale-stable*
 fi
 echo ""
-## 수동으로 치면 잘 되는데 왜 스크립트상에서는 안먹히냐
 
 source ~/.bashrc
