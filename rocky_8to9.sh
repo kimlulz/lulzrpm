@@ -22,7 +22,7 @@ echo "${b}0. Initialization"
 		fi
 	else
 		echo "It seems you are using unsupported distro."
-		echo "Exit..."
+		echo "Exit..." 
 		exit
 	fi
 
@@ -46,12 +46,12 @@ echo "${b}2. Remove older kernels and resolve dependencies"
 		rpm --rebuilddb
 		rpm -e --nodeps  `rpm -qa|grep -i kernel|grep 4.18`
 	echo "${b}Resolve dependencies..."
-		dnf module disable  perl container-tools llvm-toolset  virt perl-IO-Socket-SSL perl-libwww-perl python36 perl-DBI perl-DBD-SQLite
+		dnf module disable perl container-tools llvm-toolset virt perl-IO-Socket-SSL perl-libwww-perl python36 perl-DBI perl-DBD-SQLite
 	echo "${b}Update"
 		dnf update -y
-	echo "${b}Need reboot. Reboot now? [y, n]${n}"
-		echo -n "${b}> ${n}" ;read covrl
-		if [ $covrl = "y" -o $covrl = "Y" ]; then
+	echo "${b}Need reboot. Reboot now? [y / n or any key]${n}"
+		echo -n "${b}> ${n}" ;read yn
+		if [ $yn = "y" -o $yn = "Y" ]; then
 			reboot
 		else 
 			echo "Finished!"
