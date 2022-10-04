@@ -32,7 +32,7 @@ echo "${b}1. Change Repos to el9"
 		mv ./download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
 	echo "${b}Install..."
-		sudo dnf -y install ./rocky-{gpg,release,repos}-9.*.rpm
+		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-9.*.rpm
 	echo "${b}Remove conflict packages"
 		sudo dnf -y remove rpmconf yum-utils epel-release
 		rm -rf /usr/share/redhat-logos
@@ -46,7 +46,7 @@ echo "${b}2. Remove older kernels and resolve dependencies"
 		rpm --rebuilddb
 		rpm -e --nodeps  `rpm -qa|grep -i kernel|grep 4.18`
 	echo "${b}Resolve dependencies..."
-		dnf module disable perl container-tools llvm-toolset virt perl-IO-Socket-SSL perl-libwww-perl python36 perl-DBI perl-DBD-SQLite
+		dnf module disable -y perl container-tools llvm-toolset virt perl-IO-Socket-SSL perl-libwww-perl python36 perl-DBI perl-DBD-SQLite
 	echo "${b}Update"
 		dnf update -y
 	echo "${b}Need reboot. Reboot now? [y / n or any key]${n}"
