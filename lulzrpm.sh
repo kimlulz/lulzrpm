@@ -106,11 +106,11 @@ echo "${bold}1. Update and Install Packages${normal}"
 	fi
 echo ""
 
-echo "${bold}2. Install neofetch from Github${normal}"
-	git clone https://github.com/dylanaraps/neofetch
-	cd neofetch
-	sudo make install
-	echo ""
+echo "${bold}2. Install fastfetch from Github${normal}"
+    git clone https://github.com/LinusDierheimer/fastfetch
+    cd fastfetch && mkdir -p build && cd build
+    cmake .. && cmake --build . --target fastfetch --target flashfetch && sudo cmake --install . --prefix /usr/local
+    cd ../../  && mkdir -p ~/.fastfetch && echo ""
 
 echo "${bold}3. Install VSCode from MS YUM_Repo${normal}"
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -120,20 +120,8 @@ echo "${bold}3. Install VSCode from MS YUM_Repo${normal}"
 	echo ""
 
 echo "${bold}4. Customize .bashrc${normal}"
-	echo "${bold}Do u want to install lolcat, fortune, cowsay?? [y, n]${normal}"
-	read aws
-		if [ $aws = "y" ] then
-    		sudo dnf install -y npm lolcat fortune-mod cowsay
-    		wget -P ~/ https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/pepe2.ascii 
-echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'
-fortune | cowsay -f tux | lolcat 
-neofetch --ascii ~/pepe2.ascii | lolcat" > ~/.bashrc
-		else
-    		wget -P ~/ https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/pepe2.ascii 
-echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]' 
-neofetch --ascii ~/pepe2.ascii" > ~/.bashrc
-		fi
-echo ""
+	wget https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/preset -P ~/.fastfetch && wget https://raw.githubusercontent.com/kimlulz/dotfiles/main/zsh/pepe2.ascii -P ~/.fastfetch
+    echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'" > ~/.bashrc && echo "fastfetch --load-config .fastfetch/preset -l ~/.fastfetch/pepe2.ascii" >> ~/.bashrc && echo ""
 
 echo "${bold}5. Clean${normal}"
 echo ""
