@@ -77,7 +77,7 @@ echo ""
 
 echo "${bold}1. Update and Install Packages${normal}" 
 	sudo dnf upgrade -y
-	sudo dnf install -y --skip-broken gnome-tweaks htop make git
+	sudo dnf install -y --skip-broken gnome-tweaks htop make cmake git
 	if [ -f /etc/fedora-release ]; then
 		echo "${bold}********************"
 		echo "Fedora Detected"
