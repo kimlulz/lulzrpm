@@ -1,8 +1,12 @@
 # lulzrpm
-Script for configure my desktop environment | Fedora, Centos, Rocky   
+Script for configure my desktop environment | Fedora, EL-Based(Rocky)
+
 `sh [script].sh` to execute script.
 
 ## **lulzrpm.sh**
+**CentOS is no longer supported!!**
+
+**Migrate to Rocky through [officially provided scripts](https://raw.githubusercontent.com/rocky-linux/rocky-tools/main/migrate2rocky/migrate2rocky.sh)**
 ### Change **mirror**
 ```
 FEDORA = KAIST https://ftp.kaist.ac.kr/fedora/
