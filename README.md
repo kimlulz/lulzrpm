@@ -34,6 +34,4 @@ Refer to `https://code.visualstudio.com/docs/setup/linux`
 ![스크린샷, 2021-08-02 16-01-27](https://user-images.githubusercontent.com/42508318/127818048-d229e0d1-b36c-4eb1-bc64-30028421384b.png)    
 `PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]`    
 
-## **d2d_gnome40.sh**
-Install Dash-to-Dock for GNOME 40
-Ported by ewlsh (https://github.com/ewlsh/dash-to-dock/tree/ewlsh/gnome-40)
+
