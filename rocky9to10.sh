@@ -35,17 +35,17 @@ echo "${b}1. Change Repos to el10"
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 	echo "${b}Remove conflict repos and packages"
 		sudo dnf -y remove rpmconf yum-utils epel-release
-		rm -rf /usr/share/redhat-logos
+		sudo rm -rf /usr/share/redhat-logos
 	echo "${b}Distro-Sync"
 		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync
 
 echo "${b}2. Remove older kernels and resolve dependencies"
 	echo "${b}Remove order kernels..."
 		cd /var/lib/rpm 
-		rm -f __db.00*
-		rpm --rebuilddb
+		sudo rm -f __db.00*
+		sudo rpm --rebuilddb
 	echo "${b}Update"
-		dnf update -y
+		sudo dnf update -y
 	echo "${b}Need reboot. Reboot now? [y / n or any key]${n}"
 		echo -n "${b}> ${n}" ;read yn
 		if [ $yn = "y" -o $yn = "Y" ]; then
