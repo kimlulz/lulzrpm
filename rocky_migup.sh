@@ -90,11 +90,13 @@ nineten(){
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo dnf clean all && sudo dnf repolist
 		sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/rocky.repo
-		echo "[baseos] 
-name=Rocky Linux 10 - BaseOS 
-mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=BaseOS-10 
-enabled=1 
-gpgcheck=0 " >> /etc/yum.repos.d/rocky.repo
+		sudo bash -c 'cat <<EOF > /etc/yum.repos.d/rocky.repo
+		[baseos]
+		name=Rocky Linux 10 - BaseOS
+		mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=\$basearch&repo=BaseOS-10
+		enabled=1
+		gpgcheck=0
+		EOF'
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
