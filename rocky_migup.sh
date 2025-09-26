@@ -31,7 +31,7 @@ fkredhat(){
 }
 
 levelup(){
-    rocky_version=$(cat /etc/rocky-release)
+    rocky_version=$(grep -oP '\d+' /etc/rocky-release | head -1)
     if [[ "$rocky_version" =~ 8 ]]; then
         becho "Rocky Linux 8 Detected"
         eightnine
@@ -83,7 +83,7 @@ nineten(){
     echo -e "\033[31m"Upgrade Rocky Linux 9 to 10"\033[0m"
     becho "1. 🛠️ Change Repos to el10"
 	echo ""
-		wget -r -l1 --no-parent -A "rocky*" $ninerepo
+		wget -r -l1 --no-parent -A "rocky*" $tenrepo
 		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
 	becho "🛠️ Install..."
