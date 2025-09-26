@@ -13,7 +13,8 @@ inszsh(){
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 	chsh -s /usr/bin/zsh
     curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-	zsh test
+	echo "ZSH will turn on because of initialization. Type exit"
+	zsh 
 	wget https://github.com/kimlulz/dotfiles/blob/main/zsh/.zshrc && mv .zshrc /home/$USER/.zshrc
 	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc
 }
