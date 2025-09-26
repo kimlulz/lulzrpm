@@ -23,6 +23,7 @@ inswhale(){
 		becho "********************"
 		becho "Fedora Detected"
 		becho "********************"
+		sudo dnf install -y perl
 		sudo dnf install -y alien
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
@@ -33,11 +34,8 @@ inswhale(){
 		becho "********************"
 		becho "Rocky Linux Detected"
 		becho "********************"
-		sudo dnf install -y alien
-		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
-		sudo alien -r naver-whale-stable_amd64.deb
-		sudo rpm -Uvh --force naver-*.rpm
-		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/application/naver-whale.desktop
+		becho "Can't install on rocky linux"
+		becho "It still wip... pass..."
 	else
 		becho "**********************************************************"
 		becho "************************!!SKIP!!**************************"
@@ -108,7 +106,7 @@ becho "1. ⬆️ Update and Install Packages"
 	becho "😎 Install Browser...?"
 	sleep 5
 	becho "*************************************************"
-    becho "(1) Install Naver Whale (Chromium-based browser made by NAVER(Korea)"
+    becho "(1) [FEDORA ONLY] Install Naver Whale (Chromium-based browser made by NAVER(Korea)" 
 	becho "(2) Install Chromium"
     becho "(4) No, Just use Firefox"
     becho "*************************************************"
