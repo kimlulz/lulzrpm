@@ -25,7 +25,7 @@ fkredhat(){
 		fi
 	else
 		echo "It seems you are using unsupported distro."
-		echo "Exit..." 
+		echo "Exit..."
 		exit
 	fi
 }
