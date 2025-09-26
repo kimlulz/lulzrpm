@@ -34,18 +34,19 @@ rockyrepo(){
 			sudo dnf config-manager --set-enabled powertools
 	elif [[ "$rocky_version" =~ ^(9|10)$ ]]; then 
 	#elif (( "$rocky_version" >= 9 )); then #If newer repo file structure is same with el9
-        becho "Rocky Linux 9 Detected"
-			REPO_FILE="/etc/yum.repos.d/rocky.repo"
-			REMOTE_REPOS="mirror.navercorp.com\/rocky"
-			releasever=$(cat /etc/redhat-release | tr -dc '0-9.' | cut -d '.' -f1)
-			basearch=x86_64
-			REPO_IDS=("baseos" "appstream")
+		REPO_FILE="/etc/yum.repos.d/rocky.repo"
+		REMOTE_REPOS="mirror.navercorp.com/rocky"
+		releasever=$(rpm -q --qf "%{VERSION}" rocky-release | cut -d '.' -f1)
+		basearch=x86_64
+		REPO_IDS=("BaseOS" "AppStream")
+		becho "Rocky Linux $releasever Detected"
 			for repo_id in "${REPO_IDS[@]}"; do
-    			FULL_REPO_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${repo_id^}\/${basearch}\/os"
-    		sudo sed -i.bak -e "/^\[${repo_id}\]/,/^\[/{ 
+    			repo_id_lower=$(echo "$repo_id" | tr '[:upper:]' '[:lower:]')
+    			FULL_REPO_PATH="http://${REMOTE_REPOS}/${releasever}/${repo_id}/${basearch}/os"
+    			sudo sed -i.bak -e "/^\[${repo_id_lower}\]/,/^\[/{ 
         		s/^mirrorlist/#mirrorlist/ 
         		s|^#*baseurl=.*|baseurl=${FULL_REPO_PATH}|
-    		}" "$REPO_FILE"
+    			}" "$REPO_FILE"
 			done
 			sudo dnf clean all
 			sudo dnf makecache
