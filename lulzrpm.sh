@@ -77,7 +77,19 @@ inszsh(){
 	becho "*********************************************"
 	zsh 
 	wget https://raw.githubusercontent.com/kimlulz/dotfiles/refs/heads/main/zsh/.zshrc
-	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc && mv .zshrc /home/$USER/.zshrc
+	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc && mv .zshrc /home/$USER/.zshrc && echo ""
+	becho "🤔 Install Fonts"
+	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P /home/$USER/.local/share/fonts
+	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P /home/$USER/.local/share/fonts
+	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P /home/$USER/.local/share/fonts
+	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P /home/$USER/.local/share/fonts
+	fc-cache -f -v && echo ""
+	becho "*********************************************"
+	becho "[ZPlug]"
+	becho "Powerlevel10k Installed"
+	becho "So, you need to change font manually through your console/terminal setting"
+	becho "System fonts -> MesloLGS_NF"
+	becho "*********************************************"
 }
 
 inswhale(){
