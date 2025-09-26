@@ -8,6 +8,62 @@ function becho {
     echo ""
 }
 
+rockyrepo(){
+	becho "Change mirror >>> NAVER"
+	rocky_version=$(cat /etc/rocky-release)
+    if [[ "$rocky_version" =~ 8 ]]; then
+        becho "Rocky Linux 8 Detected"
+				REPOS_FILES="AppStream BaseOS"
+				REMOTE_REPOS="mirror.navercorp.com\/rocky"
+				releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
+				basearch=x86_64
+				for i in ${REPOS_FILES};do
+				R="/etc/yum.repos.d/Rocky-${i}.repo";
+				FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
+				sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+			done
+				sudo yum check-update
+				sudo yum repolist baseos -v
+				sudo yum repolist appstream -v
+				becho "**********************************************************"
+				becho "************************!RESULT!**************************"
+				sudo yum repolist baseos -v | grep navercorp
+				becho "************************!!PASS!!**************************"
+				becho "**********************************************************"
+			sudo dnf install -y epel-release dnf-plugins-core
+			sudo dnf config-manager --set-enabled powertools
+	elif [[ "$rocky_version" =~ ^(9|10)$ ]]; then 
+	#elif (( "$rocky_version" >= 9 )); then #If newer repo file structure is same with el9
+        becho "Rocky Linux 9 Detected"
+			REPO_FILE="/etc/yum.repos.d/rocky.repo"
+			REMOTE_REPOS="mirror.navercorp.com\/rocky"
+			releasever=$(cat /etc/redhat-release | tr -dc '0-9.' | cut -d '.' -f1)
+			basearch=x86_64
+			REPO_IDS=("baseos" "appstream")
+			for repo_id in "${REPO_IDS[@]}"; do
+    			FULL_REPO_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${repo_id^}\/${basearch}\/os"
+    		sudo sed -i.bak -e "/^\[${repo_id}\]/,/^\[/{ 
+        		s/^mirrorlist/#mirrorlist/ 
+        		s|^#*baseurl=.*|baseurl=${FULL_REPO_PATH}|
+    		}" "$REPO_FILE"
+			done
+			sudo dnf clean all
+			sudo dnf makecache
+			sudo dnf repolist "$repo_id" -v
+			becho "**********************************************************"
+			becho "************************!RESULT!**************************"
+			sudo yum repolist baseos -v | grep navercorp
+			becho "************************!!PASS!!**************************"
+			becho "**********************************************************"
+		sudo dnf install -y epel-release dnf-plugins-core
+		sudo dnf config-manager --set-enabled crb
+    else
+        becho "It seems you are using an unsupported distro."
+        becho "Exit..."
+        exit
+    fi		
+}
+
 inszsh(){
 	sudo dnf install zsh
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -19,7 +75,7 @@ inszsh(){
 	becho "TYPE EXIT!!!!!"
 	becho "*********************************************"
 	zsh 
-	wget https://github.com/kimlulz/dotfiles/blob/main/zsh/.zshrc
+	wget https://raw.githubusercontent.com/kimlulz/dotfiles/refs/heads/main/zsh/.zshrc
 	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc && mv .zshrc /home/$USER/.zshrc
 }
 
@@ -75,31 +131,7 @@ echo -e "\033[31m"CentOS is no longer supported!!!"\033[0m"
 		becho "********************"
 		becho "Rocky Linux Detected"
 		becho "********************"
-		becho "Change mirror >>> NAVER"
-			## Init.
-				REPOS_FILES="AppStream BaseOS"
-				NAVER="mirror.navercorp.com\/rocky"
-				REMOTE_REPOS=${NAVER}
-				releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
-				basearch=x86_64
-				for i in ${REPOS_FILES};do
-				R="/etc/yum.repos.d/Rocky-${i}.repo";
-				FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
-			## Process
-				sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
-			done
-			## Update
-				sudo yum check-update
-				sudo yum repolist baseos -v
-				sudo yum repolist appstream -v
-			## Check
-				becho "**********************************************************"
-				becho "************************!RESULT!**************************"
-				sudo yum repolist baseos -v | grep navercorp
-				becho "************************!!PASS!!**************************"
-				becho "**********************************************************"
-			sudo dnf install -y epel-release dnf-plugins-core
-			sudo dnf config-manager --set-enabled powertools
+		rockyrepo
 	else 
 	echo "Failed to Change Mirror"
 	echo "Skipping..."
@@ -131,7 +163,7 @@ becho "1. ⬆️ Update and Install Packages"
 echo ""
 
 becho "2. 🛠️ Build Fastfetch"
-    git clone https://github.com/LinusDierheimer/fastfetch
+    git clone https://github.com/fastfetch-cli/fastfetch
     cd fastfetch && mkdir -p build && cd build
     cmake .. && cmake --build . --target fastfetch --target flashfetch && sudo cmake --install . --prefix /usr/local
     cd ../../  && mkdir -p ~/.fastfetch && echo ""
@@ -145,7 +177,7 @@ becho "3. 🧑‍💻 Install VSCode from MS YUM_Repo"
 
 becho "4. ⌨️ Shell Customization"
 	echo "Get Preset for fastfetch"
-	wget https://raw.githubusercontent.com/fastfetch-cli/fastfetch/refs/heads/dev/presets/examples/13.jsonc -P ~/.fastfetch
+	wget https://raw.githubusercontent.com/fastfetch-cli/fastfetch/refs/heads/dev/presets/examples/13.jsonc && mv 13.jsonc /home/$USER/.fastfetch
 	echo "Modify .bashrc..."
     echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'" > ~/.bashrc && echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> /home/$USER/.bashrc && echo ""
     echo ""
@@ -172,12 +204,11 @@ becho "4. ⌨️ Shell Customization"
 becho "5. 🗑️ Clean"
 echo ""
 if [ -f /opt/naver/whale/whale ]; then
-	rm -rf ./naver-whale-stable*
-	rm -rf ./fastfetch
-	rm -f .zshrc
+	rm -rf ./naver-whale-stable* && rm -rf ./fastfetch
+	rm -f 13.jsonc && rm -f .zshrc
 else
-	sudo rm -rf ./fastfetch
-	rm -f .zshrc
+	rm -rf ./fastfetch
+	rm -f 13.zshrc && rm -f .zshrc
 fi
 echo ""
 
