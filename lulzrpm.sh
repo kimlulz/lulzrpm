@@ -13,10 +13,14 @@ inszsh(){
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 	chsh -s /usr/bin/zsh
     curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-	echo "ZSH will turn on because of initialization. Type exit"
+	echo ""
+	becho "*********************************************"
+	becho "ZSH will turn on because of initialization."
+	becho "TYPE EXIT!!!!!"
+	becho "*********************************************"
 	zsh 
-	wget https://github.com/kimlulz/dotfiles/blob/main/zsh/.zshrc && mv .zshrc /home/$USER/.zshrc
-	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc
+	wget https://github.com/kimlulz/dotfiles/blob/main/zsh/.zshrc
+	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc && mv .zshrc /home/$USER/.zshrc
 }
 
 inswhale(){
@@ -168,10 +172,12 @@ becho "4. ⌨️ Shell Customization"
 becho "5. 🗑️ Clean"
 echo ""
 if [ -f /opt/naver/whale/whale ]; then
-	sudo rm -rf ./naver-whale-stable*
-	sudo rm -rf ./fastfetch
+	rm -rf ./naver-whale-stable*
+	rm -rf ./fastfetch
+	rm -f .zshrc
 else
 	sudo rm -rf ./fastfetch
+	rm -f .zshrc
 fi
 echo ""
 
