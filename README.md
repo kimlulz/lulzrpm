@@ -1,7 +1,5 @@
 # lulzrpm
-Script for configure my desktop environment | Fedora, EL-Based(Rocky)
-
-`sh [script].sh` to execute script.
+Script for configure desktop environment | Fedora, EL-Based(Rocky)
 
 ## **lulzrpm.sh**
 **CentOS is no longer supported!!**
@@ -11,28 +9,24 @@ Script for configure my desktop environment | Fedora, EL-Based(Rocky)
 ```
 FEDORA = KAIST https://ftp.kaist.ac.kr/fedora/
 ROCKY = NAVER https://mirror.navercorp.com/rocky/
-CentOS = NAVER https://mirror.navercorp.com/centos/
 ```
 
 ### **[DNF]** Update and Install Packages
-`sudo dnf update -y`   
-`sudo dnf install -y gnome-tweaks htop make`   
+install `gnome-tweaks htop make cmake git`
 
-#### **[RPM]** Install Whale Browser(Naver) from whale.naver.com
-Fedora, Rocky  
-```
-sudo dnf install alien (Rocky Linux use powertools repo)
-Install package(DEB) from whale.naver.com   
-`sudo alien -r naver-whale-stable_amd64.deb` Convert DEB to RPM    
-`sudo rpm -Uvh --force naver-*.rpm` Install RPM Locally
-```
-CentOS won't install browser.    
+#### **[RPM]** Install Browser
+| Name | Method | From |
+| :- | :- | :- |
+| **[Fedora Only]Naver Whale**  | Package? | Using deb image |
+| **Chromium**  | DNF | From repository |
+Or just use 🔥FireFox🦊
 
-### **[GIT]** Install Neofetch from Github
-cuz official repo has old packages.   
+### **[GIT]** Build fastfetch
+>Fastfetch is a neofetch-like tool for fetching system information and displaying it in a visually appealing way. It is written mainly in C, with a focus on performance and customizability. Currently, it supports Linux, macOS, Windows 7+, Android, FreeBSD, OpenBSD, NetBSD, DragonFly, Haiku, and SunOS.
 
-### **[DNF]** Install VSCODE from MS REPO
-Refer to `https://code.visualstudio.com/docs/setup/linux`    
+refer _[fastfetch](https://github.com/fastfetch-cli/fastfetch)_
+
+### **[DNF]** Install VSCODE
 
 ### Customize *~/.bashrc*
 ![스크린샷, 2021-08-02 16-01-27](https://user-images.githubusercontent.com/42508318/127818048-d229e0d1-b36c-4eb1-bc64-30028421384b.png)    
