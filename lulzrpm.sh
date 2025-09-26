@@ -105,11 +105,11 @@ echo ""
 becho "1. ⬆️ Update and Install Packages" 
 	sudo dnf upgrade -y && sudo dnf install -y --skip-broken gnome-tweaks htop make cmake git && echo ""
 	becho "😎 Install Browser...?"
-	sleep 5
+	sleep 2
 	becho "*************************************************"
     becho "(1) [FEDORA ONLY] Install Naver Whale (Chromium-based browser made by NAVER(Korea)" 
 	becho "(2) Install Chromium"
-    becho "(4) No, Just use Firefox"
+    becho "(3) No, Just use Firefox"
     becho "*************************************************"
     becho "[1/2/3] > " ; read IB
 	if [ $IB = "1" ]; then
@@ -147,7 +147,7 @@ becho "4. ⌨️ Shell Customization"
     echo ""
 
 	becho "😎 Install ZSH...?"
-	sleep 5
+	sleep 2
 	becho "*************************************************"
     becho "(1) Install ZSH and ZPlug" 
     becho "(2) DO NOT INSTALL ZSH"
