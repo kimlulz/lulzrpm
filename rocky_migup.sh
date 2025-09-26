@@ -88,10 +88,12 @@ nineten(){
 		rm -rf ./download.rockylinux.org 
 	becho "🛠️ Install..."
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
+		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
-		rm -rf /usr/share/redhat-logos
-	echo ""
+		sudo rm -rf /usr/share/redhat-logos
+	echo "🔄️ Sync"
+		sudo dnf repolist -v
 		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
