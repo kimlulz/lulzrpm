@@ -66,7 +66,7 @@ rockyrepo(){
 }
 
 inszsh(){
-	sudo dnf install zsh
+	sudo dnf install -y zsh
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 	chsh -s /usr/bin/zsh
     curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
