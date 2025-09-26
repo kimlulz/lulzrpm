@@ -44,30 +44,86 @@ levelup(){
         becho "Cuz It's already the latest version"
         becho "Exit..." && sleep 3 && exit
     else
-        echo "It seems you are using an unsupported distro."
-        echo "Exit..."
+        becho "It seems you are using an unsupported distro."
+        becho "Exit..."
         exit
     fi
 }
 
 eightnine(){
     ninerepo=https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r
-    echo "1. Change Repos to el9"
+    echo -e "\033[31m"Upgrade Rocky Linux 8 to 9"\033[0m"
+    becho "1. 🛠️ Change Repos to el9"
 	echo ""
 		wget -r -l1 --no-parent -A "rocky*" $ninerepo
 		mv ./download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
-	echo "Install..."
+	becho "🛠️ Install..."
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-9.*.rpm
-	echo "Remove Third-Party Repository"
+	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
 		rm -rf /usr/share/redhat-logos
-	echo " "
-		sudo dnf -y --releasever=9 --allowerasing --setopt=deltarpm=false distro-sync
+	echo ""
+		sudo dnf -y --releasever=9 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
+
+    becho "2. 🗑️ Remove older kernels and resolve dependencies"
+	echo "🗑️ Remove order kernels..."
+		cd /var/lib/rpm 
+		rm -f __db.00*
+		rpm --rebuilddb
+		rpm -e --nodeps  `rpm -qa|grep -i kernel|grep 4.18`
+	echo "🛠️ Resolve dependencies..."
+		dnf module disable -y perl container-tools llvm-toolset virt perl-IO-Socket-SSL perl-libwww-perl python36 perl-DBI perl-DBD-SQLite
+	echo "⬆️ Update"
+		dnf update -y
 }
+
+nineten(){
+    tenrepo=https://download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r
+    echo -e "\033[31m"Upgrade Rocky Linux 9 to 10"\033[0m"
+    becho "1. 🛠️ Change Repos to el10"
+	echo ""
+		wget -r -l1 --no-parent -A "rocky*" $ninerepo
+		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./
+		rm -rf ./download.rockylinux.org 
+	becho "🛠️ Install..."
+		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
+	becho "🗑️ Remove Third-Party Repository"
+		sudo dnf -y remove rpmconf yum-utils epel-release
+		rm -rf /usr/share/redhat-logos
+	echo ""
+		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
+
+    becho "2. 🗑️ Remove older kernels and resolve dependencies"
+	echo "🗑️ Remove order kernels..."
+		cd /var/lib/rpm 
+		sudo rm -f __db.00*
+		sudo rpm --rebuilddb
+        rpm -e $(rpm -qa | grep .el9.)
+	echo "Update"
+		sudo dnf update -y
+}
+
+fini(){
+    sleep 3
+    echo "🔄️ Need reboot. Reboot now? [y / n or any key]"
+		echo -n "> " ;read yn
+		if [ $yn = "y" -o $yn = "Y" ]; then
+            becho "Rebooting..." && sleep 5
+			reboot
+		else 
+			becho "🎉 Finished! 🎉"
+			becho "⚠️ Need to reboot manually ⚠️" && sleep 3
+			exit
+		fi
+}
+
 
 becho "💿🔍 Checking Distro.."
 fkredhat
 
 becho "🎚️🔍 Checking Version.."
 levelup
+
+becho "🥳 Finished..."
+fini
