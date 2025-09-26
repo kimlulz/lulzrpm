@@ -88,6 +88,7 @@ nineten(){
 		rm -rf ./download.rockylinux.org 
 	becho "🛠️ Install..."
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
+		sudo sed -i 's|rocky/9/BaseOS|rocky/10/BaseOS|g' /etc/yum.repos.d/rocky.repo #왜 자동으로 안바뀌지??
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
