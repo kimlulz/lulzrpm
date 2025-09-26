@@ -168,9 +168,9 @@ becho "5. 🗑️ Clean"
 echo ""
 if [ -f /opt/naver/whale/whale ]; then
 	sudo rm -rf ./naver-whale-stable*
-	sudo rm -rf ./neofetch
+	sudo rm -rf ./fastfetch
 else
-	sudo rm -rf ./neofetch
+	sudo rm -rf ./fastfetch
 fi
 echo ""
 
