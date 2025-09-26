@@ -10,7 +10,7 @@ function becho {
 
 rockyrepo(){
 	becho "Change mirror >>> NAVER"
-	rocky_version=$(cat /etc/rocky-release)
+	rocky_version=$(grep -oP '\d+' /etc/rocky-release | head -1)
     if [[ "$rocky_version" =~ 8 ]]; then
         becho "Rocky Linux 8 Detected"
 				REPOS_FILES="AppStream BaseOS"
