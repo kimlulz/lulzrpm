@@ -90,16 +90,6 @@ eightnine(){
 		dnf update -y
 }
 
-addtenrepo() { #NO LONGER USE
-#sudo tee /etc/yum.repos.d/rocky.repo > /dev/null <<EOF
-#[baseos]
-#name=Rocky Linux 10 - BaseOS
-#mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=\$basearch&repo=BaseOS-10
-#enabled=1
-#gpgcheck=0
-#EOF
-}
-
 nineten(){
     tenrepo=https://download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r
 	clear
@@ -112,7 +102,6 @@ nineten(){
 		clear
 	becho "🛠️ Install Prerequired Packages..."
 		sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
-		#addtenrepo
 		sudo sed -i 's|$releasever - BaseOS|10 - BaseOS|g' /etc/yum.repos.d/rocky.repo 
 		sudo sed -i 's|BaseOS-$releasever$rltype|10|g' /etc/yum.repos.d/rocky.repo 
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
