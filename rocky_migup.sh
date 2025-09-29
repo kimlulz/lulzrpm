@@ -50,6 +50,12 @@ levelup(){
     fi
 }
 
+initup(){
+	sudo dnf update -y
+	sudo dnf autoremove -y
+	sudo dnf clean all
+}
+
 eightnine(){
     ninerepo=https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r
     echo -e "\033[31m"Upgrade Rocky Linux 8 to 9"\033[0m"
@@ -78,6 +84,16 @@ eightnine(){
 		dnf update -y
 }
 
+addtenrepo() {
+sudo tee /etc/yum.repos.d/rocky.repo > /dev/null <<EOF
+[baseos]
+name=Rocky Linux 10 - BaseOS
+mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=\$basearch&repo=BaseOS-10
+enabled=1
+gpgcheck=0
+EOF
+}
+
 nineten(){
     tenrepo=https://download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r
     echo -e "\033[31m"Upgrade Rocky Linux 9 to 10"\033[0m"
@@ -87,16 +103,10 @@ nineten(){
 		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
 	becho "🛠️ Install..."
-		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
+		sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
+		addtenrepo
 		sudo dnf clean all && sudo dnf repolist
-		sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/rocky.repo
-		### 임시 - EOF 명령어 안먹힘..###
-		sudo echo "[baseos]" >> /etc/yum.repos.d/rocky.repo
-		sudo echo "name=Rocky Linux 10 - BaseOS" >> /etc/yum.repos.d/rocky.repo
-		sudo echo "mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=\$basearch&repo=BaseOS-10" >> /etc/yum.repos.d/rocky.repo
-		sudo echo "enabled=1" >> /etc/yum.repos.d/rocky.repo
-		sudo echo "gpgcheck=0" >> /etc/yum.repos.d/rocky.repo
-		### 임시 - EOF 명령어 안먹힘..###
+		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
@@ -132,6 +142,9 @@ fini(){
 
 becho "💿🔍 Checking Distro.."
 fkredhat
+
+becho "⬆️ Update all Packages.."
+initup
 
 becho "🎚️🔍 Checking Version.."
 levelup
