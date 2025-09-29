@@ -90,7 +90,7 @@ eightnine(){
 		dnf update -y
 }
 
-addtenrepo() {
+addtenrepo() { #NO LONGER USE
 #sudo tee /etc/yum.repos.d/rocky.repo > /dev/null <<EOF
 #[baseos]
 #name=Rocky Linux 10 - BaseOS
@@ -98,8 +98,6 @@ addtenrepo() {
 #enabled=1
 #gpgcheck=0
 #EOF
-sudo sed -i 's|$releasever - BaseOS|10 - BaseOS|g' /etc/yum.repos.d/rocky.repo 
-sudo sed -i 's|BaseOS-$releasever$rltype|10|g' /etc/yum.repos.d/rocky.repo 
 }
 
 nineten(){
@@ -114,7 +112,9 @@ nineten(){
 		clear
 	becho "🛠️ Install Prerequired Packages..."
 		sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
-		addtenrepo
+		#addtenrepo
+		sudo sed -i 's|$releasever - BaseOS|10 - BaseOS|g' /etc/yum.repos.d/rocky.repo 
+		sudo sed -i 's|BaseOS-$releasever$rltype|10|g' /etc/yum.repos.d/rocky.repo 
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
 		sudo dnf clean all && sudo dnf repolist
@@ -134,8 +134,7 @@ nineten(){
 		cd /var/lib/rpm 
 		sudo rm -f __db.00*
 		sudo rpm --rebuilddb
-        rpm -e $(rpm -qa | grep .el9.)
-		clear
+        sudo rpm -e $(rpm -qa | grep .el9.)
 	echo "Update"
 		sudo dnf update -y
 }
