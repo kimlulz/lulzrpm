@@ -34,9 +34,11 @@ levelup(){
     rocky_version=$(grep -oP '\d+' /etc/rocky-release | head -1)
     if [[ "$rocky_version" =~ 8 ]]; then
         becho "Rocky Linux 8 Detected"
+		sleep 5
         eightnine
     elif [[ "$rocky_version" =~ 9 ]]; then
         becho "Rocky Linux 9 Detected"
+		sleep 5
         nineten
     elif [[ "$rocky_version" =~ 10 ]]; then
         becho "Rocky Linux 10 Detected"
@@ -57,6 +59,7 @@ initup(){
 }
 
 eightnine(){
+	clear
     ninerepo=https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r
     echo -e "\033[31m"Upgrade Rocky Linux 8 to 9"\033[0m"
     becho "1. 🛠️ Change Repos to el9"
@@ -64,11 +67,14 @@ eightnine(){
 		wget -r -l1 --no-parent -A "rocky*" $ninerepo
 		mv ./download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
+		clear
 	becho "🛠️ Install..."
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-9.*.rpm
+		clear
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
 		rm -rf /usr/share/redhat-logos
+		clear
 	echo ""
 		sudo dnf -y --releasever=9 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
 
@@ -96,24 +102,29 @@ EOF
 
 nineten(){
     tenrepo=https://download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r
+	clear
     echo -e "\033[31m"Upgrade Rocky Linux 9 to 10"\033[0m"
     becho "1. 🛠️ Change Repos to el10"
 	echo ""
 		wget -r -l1 --no-parent -A "rocky*" $tenrepo
 		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
+		clear
 	becho "🛠️ Install..."
 		sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
 		addtenrepo
 		sudo dnf clean all && sudo dnf repolist
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
+		clear
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
 		sudo rm -rf /usr/share/redhat-logos
+		clear
 	echo "🔄️ Sync"
 		sudo dnf repolist -v
 		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
+		clear
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
 	echo "🗑️ Remove order kernels..."
@@ -121,12 +132,13 @@ nineten(){
 		sudo rm -f __db.00*
 		sudo rpm --rebuilddb
         rpm -e $(rpm -qa | grep .el9.)
+		clear
 	echo "Update"
 		sudo dnf update -y
 }
 
 fini(){
-    sleep 3
+    sleep 3 && clear
     echo "🔄️ Need reboot. Reboot now? [y / n or any key]"
 		echo -n "> " ;read yn
 		if [ $yn = "y" -o $yn = "Y" ]; then
