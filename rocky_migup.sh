@@ -91,31 +91,33 @@ eightnine(){
 }
 
 addtenrepo() {
-sudo tee /etc/yum.repos.d/rocky.repo > /dev/null <<EOF
-[baseos]
-name=Rocky Linux 10 - BaseOS
-mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=\$basearch&repo=BaseOS-10
-enabled=1
-gpgcheck=0
-EOF
+#sudo tee /etc/yum.repos.d/rocky.repo > /dev/null <<EOF
+#[baseos]
+#name=Rocky Linux 10 - BaseOS
+#mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=\$basearch&repo=BaseOS-10
+#enabled=1
+#gpgcheck=0
+#EOF
+sudo sed -i 's|$releasever - BaseOS|10 - BaseOS|g' /etc/yum.repos.d/rocky.repo 
+sudo sed -i 's|BaseOS-$releasever$rltype|10|g' /etc/yum.repos.d/rocky.repo 
 }
 
 nineten(){
     tenrepo=https://download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r
 	clear
     echo -e "\033[31m"Upgrade Rocky Linux 9 to 10"\033[0m"
-    becho "1. 🛠️ Change Repos to el10"
+    becho "1. 🛠️ Download Prerequired Packages..."
 	echo ""
 		wget -r -l1 --no-parent -A "rocky*" $tenrepo
 		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
 		clear
-	becho "🛠️ Install..."
+	becho "🛠️ Install Prerequired Packages..."
 		sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
 		addtenrepo
-		sudo dnf clean all && sudo dnf repolist
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
+		sudo dnf clean all && sudo dnf repolist
 		clear
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
@@ -123,6 +125,7 @@ nineten(){
 		clear
 	echo "🔄️ Sync"
 		sudo dnf repolist -v
+		echo "Wait" && sleep 1 && echo "Wait ." && sleep 1 && echo "Wait .." && sleep 1 && echo "Wait ..." && sleep 1
 		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
 		clear
 
