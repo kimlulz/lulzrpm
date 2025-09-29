@@ -99,25 +99,25 @@ nineten(){
 		wget -r -l1 --no-parent -A "rocky*" $tenrepo
 		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./
 		rm -rf ./download.rockylinux.org 
-		clear && sleep 3
+		sleep 3 && clear
 	becho "🛠️ Install Prerequired Packages..."
 		#sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
 		sudo sed -i 's|$releasever - BaseOS|10 - BaseOS|g' /etc/yum.repos.d/rocky.repo 
 		sudo sed -i 's|BaseOS-$releasever$rltype|10|g' /etc/yum.repos.d/rocky.repo 
-		cat /etc/yum.repos.d/rocky.repo && sleep 3
+		cat /etc/yum.repos.d/rocky.repo && sleep 5
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
 		sudo dnf clean all && sudo dnf repolist
-		clear && sleep 3
+		sleep 3 && clear
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
 		sudo rm -rf /usr/share/redhat-logos
-		clear && sleep 3
+		sleep 3 && clear
 	echo "🔄️ Sync"
 		sudo dnf repolist -v
 		echo "Wait" && sleep 1 && echo "Wait ." && sleep 1 && echo "Wait .." && sleep 1 && echo "Wait ..." && sleep 1
 		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
-		clear && sleep 3
+		sleep 3 && clear
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
 	echo "🗑️ Remove order kernels..."
