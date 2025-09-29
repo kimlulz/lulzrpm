@@ -142,7 +142,7 @@ fini(){
 		fi
 }
 
-
+clear
 becho "💿🔍 Checking Distro.."
 fkredhat
 
