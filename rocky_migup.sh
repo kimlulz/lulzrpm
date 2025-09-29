@@ -101,7 +101,7 @@ nineten(){
 		rm -rf ./download.rockylinux.org 
 		clear
 	becho "🛠️ Install Prerequired Packages..."
-		sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
+		#sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
 		sudo sed -i 's|$releasever - BaseOS|10 - BaseOS|g' /etc/yum.repos.d/rocky.repo 
 		sudo sed -i 's|BaseOS-$releasever$rltype|10|g' /etc/yum.repos.d/rocky.repo 
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
