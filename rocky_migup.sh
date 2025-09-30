@@ -72,11 +72,12 @@ eightnine(){
     becho "1. 🛠️ Change Repos to el9"
 	echo ""
 		wget -r -l1 --no-parent -A "rocky*" $ninerepo
-		mv ./download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r/* ./
+		mkdir ./tmp
+		mv ./download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r/* ./tmp
 		rm -rf ./download.rockylinux.org 
 		clear
 	becho "🛠️ Install..."
-		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-9.*.rpm
+		sudo dnf -y install ./tmp/rocky-{gpg-keys,release,repos}-9.*.rpm
 		clear
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release
@@ -129,6 +130,7 @@ nineten(){
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
 		sudo dnf -y autoremove
 		sudo dnf -y distro-sync
+		sudo rm -rf ./tmp
 	#echo "🗑️ Remove order kernels..."
 		#cd /var/lib/rpm 
 		#sudo rm -f __db.00*
