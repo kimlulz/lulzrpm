@@ -114,16 +114,13 @@ almarepo(){
 	REMOTE_REPOS="mirror.krfoss.org\/almalinux"
 	releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
 	basearch=x86_64
-	
 	for i in ${REPOS_FILES}; do
     R="/etc/yum.repos.d/almalinux-${i}.repo"
-    
     case "$i" in
         appstream) CAP_NAME="AppStream" ;;
         baseos) CAP_NAME="BaseOS" ;;
         *) echo "Unknown repository: $i" ; continue;;
     esac
-
     FULL_REPOS_PATH="https:\/\/${REMOTE_REPOS}\/${releasever}\/${CAP_NAME}\/${basearch}\/os"
     sudo sed -i.bak \
         -re "s/^(mirrorlist.*)/##\1/g" \
