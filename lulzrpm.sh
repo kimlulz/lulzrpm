@@ -1,11 +1,53 @@
 #!/bin/bash
-## For Fedora, Rocky
 BL=$(tput bold)
 NRM=$(tput sgr0)
+el_ver=$(cat /etc/redhat-release | tr -dc '0-9.' | cut -d '.' -f1)
+
 
 function becho {
-	>&2 echo -n "$BL$1$NRM"
+	echo -e "${BL}$1${NRM}"
     echo ""
+}
+
+mirch(){
+	if [ -f /etc/fedora-release ]; then
+		becho "********************"
+		becho "Fedora Detected"
+		becho "********************"
+		fedorepo
+
+	elif [ -f /etc/rocky-release ]; then
+		becho "********************"
+		becho "Rocky Linux Detected"
+		becho "********************"
+		rockyrepo
+	
+	elif [ -f /etc/alma-release ]; then
+		becho "********************"
+		becho "AlmaLinux Detected"
+		becho "********************"
+		almarepo
+
+	else 
+		becho "Failed to Change Mirror"
+		becho "Skipping..."
+	fi
+echo ""
+}
+
+fedorepo(){
+	echo "Change mirror >>> KRFOSS"
+    		## Init.
+			BASE_REPOS=/etc/yum.repos.d/fedora.repo
+			KAIST="mirror.krfoss.org\/fedora"
+			REPOS=${KAIST}
+			releasever=$(cat /etc/fedora-release | tr -dc '0-9.'|cut -d \. -f1)
+			basearch=x86_64
+			FULL_REPOS="http:\/\/${REPOS}\/${releasever}\/BaseOS\/${basearch}\/os"
+			## Process
+			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS}/" ${BASE_REPOS} 
+			## Update
+			sudo yum repolist baseos -v
 }
 
 rockyrepo(){
@@ -65,6 +107,36 @@ rockyrepo(){
     fi		
 }
 
+almarepo(){
+	becho "Change mirror >>> KRFOSS"
+	alma_version=$(grep -oP '\d+' /etc/almalinux-release | head -1)
+	REPOS_FILES="AppStream BaseOS"
+	REMOTE_REPOS="mirror.krfoss.org\/alma"
+	releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
+	basearch=x86_64
+	for i in ${REPOS_FILES};do
+		R="/etc/yum.repos.d/almalinux-${i}.repo";
+		FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
+		sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+	done
+	sudo yum check-update
+	sudo yum repolist baseos -v
+	sudo yum repolist appstream -v
+	becho "**********************************************************"
+	becho "************************!RESULT!**************************"
+	sudo yum repolist baseos -v | grep krfoss
+	becho "************************!!PASS!!**************************"
+	becho "**********************************************************"
+	sudo dnf install -y epel-release dnf-plugins-core
+	if [[ "$alma_version" =~ 8 ]]; then
+    	sudo dnf config-manager --set-enabled powertools
+	elif [[ "$alma_version" =~ ^(9|10)$ ]]; then 
+		sudo dnf config-manager --set-enabled crb
+    else
+    	becho "Powertools/CRB Not found"
+    fi	
+}
+
 inszsh(){
 	sudo dnf install -y zsh
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -102,14 +174,25 @@ inswhale(){
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
-		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/application/naver-whale.desktop
+		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/applications/naver-whale.desktop
 
-	elif [ -f /etc/rocky-release ]; then
+	elif [[ "$el_ver" =~ ^(8|9)$ ]]; then 
 		becho "********************"
-		becho "Rocky Linux Detected"
+		becho "Enterprise Linux ($el_ver) Detected"
 		becho "********************"
-		becho "Can't install on rocky linux"
-		becho "It still wip... pass..."
+		sudo dnf install -y --enablerepo=epel alien
+		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
+		sudo alien -r naver-whale-stable_amd64.deb
+		sudo rpm -Uvh --force naver-*.rpm
+		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/applications/naver-whale.desktop
+
+	elif [ "$el_ver" = "10" ]; then
+		becho "********************"
+		becho "Enterprise Linux (10) Detected"
+		becho "********************"
+		echo "There's no any ways to install"
+		becho "SKIP"
+
 	else
 		becho "**********************************************************"
 		becho "************************!!SKIP!!**************************"
@@ -123,40 +206,14 @@ echo "" && echo -e "\033[31m"The location of mirror is based on Korea."\033[0m"
 echo -e "\033[31m"If you want to use it in another country, please change it yourself!!"\033[0m" && echo "" && sleep 5
 becho "0. 🌍 Change Mirror"
 echo -e "\033[31m"CentOS is no longer supported!!!"\033[0m"
-	if [ -f /etc/fedora-release ]; then
-		becho "********************"
-		becho "Fedora Detected"
-		becho "********************"
-		becho "Change mirror >>> KAIST"
-    		## Init.
-			BASE_REPOS=/etc/yum.repos.d/fedora.repo
-			KAIST="ftp.kaist.ac.kr\/fedora"
-			REPOS=${KAIST}
-			releasever=$(cat /etc/fedora-release | tr -dc '0-9.'|cut -d \. -f1)
-			basearch=x86_64
-			FULL_REPOS="http:\/\/${REPOS}\/${releasever}\/BaseOS\/${basearch}\/os"
-			## Process
-			sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[#]*baseurl(.*)/baseurl=${FULL_REPOS}/" ${BASE_REPOS} 
-			## Update
-			sudo yum repolist baseos -v
-
-	elif [ -f /etc/rocky-release ]; then
-		becho "********************"
-		becho "Rocky Linux Detected"
-		becho "********************"
-		rockyrepo
-	else 
-	echo "Failed to Change Mirror"
-	echo "Skipping..."
-	fi
-echo ""
+mirch
 
 becho "1. ⬆️ Update and Install Packages" 
 	sudo dnf upgrade -y && sudo dnf install -y --skip-broken gnome-tweaks htop make cmake git && echo ""
-	becho "😎 Install Browser...?"
+becho "😎 Install Browser...?"
 	sleep 2
 	becho "*************************************************"
-    becho "(1) [FEDORA ONLY] Install Naver Whale (Chromium-based browser made by NAVER(Korea)" 
+    becho "(1) [Fedora/EL9] Install Naver Whale (Chromium-based browser made by NAVER(Korea)" 
 	becho "(2) Install Chromium"
     becho "(3) No, Just use Firefox"
     becho "*************************************************"
@@ -173,7 +230,6 @@ becho "1. ⬆️ Update and Install Packages"
         echo "PASS"
 		echo ""
         fi
-echo ""
 
 becho "2. 🛠️ Build Fastfetch"
     git clone https://github.com/fastfetch-cli/fastfetch
@@ -185,8 +241,7 @@ becho "3. 🧑‍💻 Install VSCode from MS YUM_Repo"
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	sudo dnf check-update && sudo dnf upgrade
-	sudo dnf install -y code
-	echo ""
+	sudo dnf install -y code && echo ""
 
 becho "4. ⌨️ Shell Customization"
 	echo "Get Preset for fastfetch"
