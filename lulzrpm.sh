@@ -249,9 +249,8 @@ becho "2. 🛠️ Build Fastfetch"
 
 becho "3. 🧑‍💻 Install VSCode from MS YUM_Repo"
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-	sudo dnf check-update && sudo dnf upgrade
-	sudo dnf install -y code && echo ""
+	echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+	sudo dnf check-update && sudo dnf install -y code && echo ""
 
 becho "4. ⌨️ Shell Customization"
 	echo "Get Preset for fastfetch"
