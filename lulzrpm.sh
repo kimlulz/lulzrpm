@@ -111,7 +111,7 @@ almarepo(){
 	becho "Change mirror >>> KRFOSS"
 	alma_version=$(grep -oP '\d+' /etc/almalinux-release | head -1)
 	REPOS_FILES="appstream baseos"
-	REMOTE_REPOS="mirror.krfoss.org\/alma"
+	REMOTE_REPOS="mirror.krfoss.org\/almalinux"
 	releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
 	basearch=x86_64
 	for i in ${REPOS_FILES};do
