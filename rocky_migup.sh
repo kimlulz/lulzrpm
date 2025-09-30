@@ -117,7 +117,7 @@ nineten(){
 		sudo dnf repolist -v
 		echo "Wait" && sleep 1 && echo "Wait ." && sleep 1 && echo "Wait .." && sleep 1 && echo "Wait ..." && sleep 1
 		#sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
-		sudo dnf update -y
+		sudo dnf update -y --allowerasing
 		sleep 3 && clear
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
