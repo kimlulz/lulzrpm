@@ -116,7 +116,7 @@ almarepo(){
 	basearch=x86_64
 	for i in ${REPOS_FILES};do
 		R="/etc/yum.repos.d/almalinux-${i}.repo";
-		FULL_REPOS_PATH="http:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
+		FULL_REPOS_PATH="https:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
 		sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[# ]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
 	done
 	sudo yum check-update
