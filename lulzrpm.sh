@@ -114,10 +114,14 @@ almarepo(){
 	REMOTE_REPOS="mirror.krfoss.org\/almalinux"
 	releasever=$(cat /etc/redhat-release | tr -dc '0-9.'|cut -d \. -f1)
 	basearch=x86_64
-	for i in ${REPOS_FILES};do
-		R="/etc/yum.repos.d/almalinux-${i}.repo";
-		FULL_REPOS_PATH="https:\/\/${REMOTE_REPOS}\/${releasever}\/${i}\/${basearch}\/os"
-		sudo sed  -i.bak -re "s/^(mirrorlist(.*))/##\1/g" -re "s/[# ]*baseurl(.*)/baseurl=${FULL_REPOS_PATH}/" ${R}
+	for i in ${REPOS_FILES}; do
+		R="/etc/yum.repos.d/almalinux-${i}.repo"
+		CAP_NAME="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
+		FULL_REPOS_PATH="https:\/\/${REMOTE_REPOS}\/${releasever}\/${CAP_NAME}\/${basearch}\/os"
+		sudo sed -i.bak \
+			-re "s/^(mirrorlist.*)/##\1/g" \
+			-re "s|[# ]*baseurl=.*|baseurl=${FULL_REPOS_PATH}|" \
+			"${R}"
 	done
 	sudo yum check-update
 	sudo yum repolist baseos -v
