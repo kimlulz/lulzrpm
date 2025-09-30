@@ -127,11 +127,12 @@ nineten(){
 		sleep 3 && clear
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
-	echo "🗑️ Remove order kernels..."
-		cd /var/lib/rpm 
-		sudo rm -f __db.00*
-		sudo rpm --rebuilddb
-        sudo rpm -e $(rpm -qa | grep .el9.) && sleep 3
+		sudo dnf -y autoremove
+	#echo "🗑️ Remove order kernels..."
+		#cd /var/lib/rpm 
+		#sudo rm -f __db.00*
+		#sudo rpm --rebuilddb
+        #sudo rpm -e $(rpm -qa | grep .el9.) && sleep 3
 }
 
 fini(){
