@@ -22,7 +22,7 @@ mirch(){
 		becho "********************"
 		rockyrepo
 	
-	elif [ -f /etc/alma-release ]; then
+	elif [ -f /etc/almalinux-release ]; then
 		becho "********************"
 		becho "AlmaLinux Detected"
 		becho "********************"
