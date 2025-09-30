@@ -128,6 +128,7 @@ nineten(){
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
 		sudo dnf -y autoremove
+		sudo dnf -y distro-sync
 	#echo "🗑️ Remove order kernels..."
 		#cd /var/lib/rpm 
 		#sudo rm -f __db.00*
