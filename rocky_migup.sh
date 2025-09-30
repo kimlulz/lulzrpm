@@ -7,6 +7,14 @@ function becho {
     echo ""
 }
 
+gogogo(){
+	clear && becho "Before start, Make sure your system packages are Up-to-date (With booted to newer kernel)!! (ctrl+c to cancel) ." && sleep 1
+	clear && becho "Before start, Make sure your system packages are Up-to-date (With booted to newer kernel)!! (ctrl+c to cancel) .." && sleep 1
+	clear && becho "Before start, Make sure your system packages are Up-to-date (With booted to newer kernel)!! (ctrl+c to cancel) ..." && sleep 1
+	clear && becho "Before start, Make sure your system packages are Up-to-date (With booted to newer kernel)!! (ctrl+c to cancel) ...." && sleep 1
+	clear && becho "Before start, Make sure your system packages are Up-to-date (With booted to newer kernel)!! (ctrl+c to cancel) ....." && sleep 1
+}
+
 fkredhat(){
 	if [ -f /etc/rocky-release ]; then
 		echo "Rocky Linux Detected.."
@@ -53,7 +61,6 @@ levelup(){
 }
 
 initup(){
-	sudo dnf update -y
 	sudo dnf autoremove -y
 	sudo dnf clean all
 }
@@ -115,9 +122,8 @@ nineten(){
 		sleep 3 && clear
 	echo "🔄️ Sync"
 		sudo dnf repolist -v
-		echo "Wait" && sleep 1 && echo "Wait ." && sleep 1 && echo "Wait .." && sleep 1 && echo "Wait ..." && sleep 1
-		#sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
 		sudo dnf update -y --allowerasing
+		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
 		sleep 3 && clear
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
@@ -142,7 +148,11 @@ fini(){
 		fi
 }
 
-clear
+gogogo
+
+becho "💿🔍 Checking Distro.."
+sleep 3
+
 becho "💿🔍 Checking Distro.."
 fkredhat
 
