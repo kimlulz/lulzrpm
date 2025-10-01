@@ -80,7 +80,7 @@ eightnine(){
 		sudo dnf -y install ./tmp/rocky-{gpg-keys,release,repos}-9.*.rpm
 		clear
 	becho "🗑️ Remove Third-Party Repository"
-		sudo dnf -y remove rpmconf yum-utils epel-release
+		sudo dnf -y remove rpmconf yum-utils epel-release elrepo-release
 		rm -rf /usr/share/redhat-logos
 		clear
 	echo ""
