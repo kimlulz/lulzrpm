@@ -215,6 +215,7 @@ inswhale(){
 	fi
 }
 
+echo -e "\033[31m"CentOS is no longer supported!!!"\033[0m"
 becho "0. 🌍 Change Mirror"
 sleep 2
 	becho "*************************************************"
@@ -232,8 +233,6 @@ sleep 2
         echo "Using default mirror..."
 		echo ""
 	fi
-echo -e "\033[31m"CentOS is no longer supported!!!"\033[0m"
-mirch
 
 becho "1. ⬆️ Update and Install Packages" 
 	sudo dnf upgrade -y && sudo dnf install -y --skip-broken gnome-tweaks htop make cmake git && echo ""
