@@ -199,8 +199,9 @@ inswhale(){
 	elif [ "$el_ver" = "10" ]; then
 		becho "********************"
 		becho "Enterprise Linux (10) Detected"
+		becho "May not works on el10"
 		becho "********************"
-		sudo dnf install -y --enablerepo=epel --releasever=9 alien
+		sudo dnf install -y --enablerepo=epel --releasever=9 alien perl
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
 		sudo rpm -Uvh --force naver-*.rpm
@@ -261,7 +262,7 @@ becho "2. 🛠️ Build Fastfetch"
     git clone https://github.com/fastfetch-cli/fastfetch
     cd fastfetch && mkdir -p build && cd build
     cmake .. && cmake --build . --target fastfetch --target flashfetch && sudo cmake --install . --prefix /usr/local
-    cd ../../  && mkdir -p ~/.fastfetch && echo ""
+    cd ../../  && mkdir -p /home/$USER/.fastfetch && echo ""
 
 becho "3. 🧑‍💻 Install VSCode from MS YUM_Repo"
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -272,7 +273,7 @@ becho "4. ⌨️ Shell Customization"
 	echo "Get Preset for fastfetch"
 	wget https://raw.githubusercontent.com/fastfetch-cli/fastfetch/refs/heads/dev/presets/examples/13.jsonc && mv 13.jsonc /home/$USER/.fastfetch
 	echo "Modify .bashrc..."
-    echo "PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0m\]|\[\e[0;1m\]$?\[\e[0m\]] \[\e[0;1;3;4m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]'" > ~/.bashrc && echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> /home/$USER/.bashrc && echo ""
+	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> /home/$USER/.bashrc && echo ""
     echo ""
 
 	becho "😎 Install ZSH...?"
