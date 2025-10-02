@@ -258,10 +258,8 @@ becho "😎 Install Browser...?"
 		echo ""
         fi
 
-becho "2. 🛠️ Build Fastfetch"
-    git clone https://github.com/fastfetch-cli/fastfetch
-    cd fastfetch && mkdir -p build && cd build
-    cmake .. && cmake --build . --target fastfetch --target flashfetch && sudo cmake --install . --prefix /usr/local
+becho "2. 🛠️ Install Fastfetch"
+	sudo dnf install fastfetch
     cd ../../  && mkdir -p /home/$USER/.fastfetch && echo ""
 
 becho "3. 🧑‍💻 Install VSCode from MS YUM_Repo"
