@@ -215,9 +215,23 @@ inswhale(){
 	fi
 }
 
-echo "" && echo -e "\033[31m"The location of mirror is based on Korea."\033[0m"
-echo -e "\033[31m"If you want to use it in another country, please change it yourself!!"\033[0m" && echo "" && sleep 5
 becho "0. 🌍 Change Mirror"
+sleep 2
+	becho "*************************************************"
+    becho "(1) Using KR Mirror (KRFOSS for Fedora, Alma / Naver for Rocky)" 
+    becho "(2) Using Default Mirror"
+    becho "*************************************************"
+    becho "[1/2] > " ; read CMKR
+	if [ $CMKR = "1" ]; then
+		echo "Using KR mirror..."
+    	mirch
+    elif [ $CMKR = "2" ]; then
+    	echo "Using default mirror..."
+		echo ""
+    else
+        echo "Using default mirror..."
+		echo ""
+	fi
 echo -e "\033[31m"CentOS is no longer supported!!!"\033[0m"
 mirch
 
