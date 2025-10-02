@@ -200,8 +200,11 @@ inswhale(){
 		becho "********************"
 		becho "Enterprise Linux (10) Detected"
 		becho "********************"
-		echo "There's no any ways to install"
-		becho "SKIP"
+		sudo dnf install -y --enablerepo=epel --releasever=9 alien
+		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
+		sudo alien -r naver-whale-stable_amd64.deb
+		sudo rpm -Uvh --force naver-*.rpm
+		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/applications/naver-whale.desktop
 
 	else
 		becho "**********************************************************"
@@ -223,7 +226,7 @@ becho "1. ⬆️ Update and Install Packages"
 becho "😎 Install Browser...?"
 	sleep 2
 	becho "*************************************************"
-    becho "(1) [Fedora/EL9] Install Naver Whale (Chromium-based browser made by NAVER(Korea)" 
+    becho "(1) Install Naver Whale (Chromium-based browser made by NAVER(Korea)" 
 	becho "(2) Install Chromium"
     becho "(3) No, Just use Firefox"
     becho "*************************************************"
