@@ -21,7 +21,7 @@ install `gnome-tweaks htop make cmake git`
 | **Chromium**  | DNF | From repository |
 | **🔥FireFox🦊*  | DNF | Included |
 
-### **Build fastfetch**
+### **Install fastfetch**
 >Fastfetch is a neofetch-like tool for fetching system information and displaying it in a visually appealing way. It is written mainly in C, with a focus on performance and customizability. Currently, it supports Linux, macOS, Windows 7+, Android, FreeBSD, OpenBSD, NetBSD, DragonFly, Haiku, and SunOS.
 
 refer _[fastfetch](https://github.com/fastfetch-cli/fastfetch)_
