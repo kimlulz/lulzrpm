@@ -110,8 +110,7 @@ nineten(){
 		sleep 3 && clear
 	becho "🛠️ Install Prerequired Packages..."
 		#sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
-		sudo sed -i 's|$releasever - BaseOS|10 - BaseOS|g' /etc/yum.repos.d/rocky.repo 
-		sudo sed -i 's|BaseOS-$releasever|BaseOS-10|g' /etc/yum.repos.d/rocky.repo 
+		sudo sed -i 's|$releasever|10|g' /etc/yum.repos.d/rocky.repo 
 		cat /etc/yum.repos.d/rocky.repo && sleep 5
 		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
@@ -131,6 +130,7 @@ nineten(){
 		sudo dnf -y autoremove
 		sudo dnf -y distro-sync
 		sudo rm -rf ./tmp
+		sudo sed -i 's|-10|$releasever|g' /etc/yum.repos.d/rocky.repo 
 	#echo "🗑️ Remove order kernels..."
 		#cd /var/lib/rpm 
 		#sudo rm -f __db.00*
