@@ -128,16 +128,12 @@ nineten(){
 		sleep 3 && clear
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
-		sudo dnf -y autoremove
-		sudo dnf -y distro-sync
+		sudo dnf -y autoremove && sudo dnf -y distro-sync
 		sudo rm -rf ./tmp
 		sudo sed -i 's|-10|-$releasever|g' /etc/yum.repos.d/rocky.repo 
-		sudo dnf -y install rocky-backgrounds gnome-extensions-app gnome-text-editor
-	#echo "🗑️ Remove order kernels..."
-		#cd /var/lib/rpm 
-		#sudo rm -f __db.00*
-		#sudo rpm --rebuilddb
-        #sudo rpm -e $(rpm -qa | grep .el9.) && sleep 3
+		sudo dnf -y install sqlite rocky-backgrounds gnome-extensions-app gnome-text-editor
+		sudo dnf -y remove kernel-5* kernel-core-5* kernel-devel-5* kernel-header-5*
+		sudo rpm --rebuilddb
 }
 
 fini(){
