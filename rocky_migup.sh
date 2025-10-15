@@ -130,7 +130,8 @@ nineten(){
 		sudo dnf -y autoremove
 		sudo dnf -y distro-sync
 		sudo rm -rf ./tmp
-		sudo sed -i 's|-10|$releasever|g' /etc/yum.repos.d/rocky.repo 
+		sudo sed -i 's|-10|-$releasever|g' /etc/yum.repos.d/rocky.repo 
+		sudo dnf -y install rocky-backgrounds gnome-extensions-app
 	#echo "🗑️ Remove order kernels..."
 		#cd /var/lib/rpm 
 		#sudo rm -f __db.00*
