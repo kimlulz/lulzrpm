@@ -75,16 +75,18 @@ eightnine(){
 		mkdir ./tmp
 		mv ./download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/r/* ./tmp
 		rm -rf ./download.rockylinux.org 
-		clear
+		clear && sleep 3
 	becho "🛠️ Install..."
 		sudo dnf -y install ./tmp/rocky-{gpg-keys,release,repos}-9.*.rpm
-		clear
+		clear && sleep 3
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release elrepo-release
 		rm -rf /usr/share/redhat-logos
-		clear
+		clear && sleep 3
 	echo ""
-		sudo dnf -y --releasever=9 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
+		sudo dnf repolist -v
+		sudo dnf update -y --allowerasing
+		sudo dnf -y --releasever=9 --allowerasing --setopt=deltarpm=false distro-sync && echo "" && sleep 3
 
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
 	echo "🗑️ Remove order kernels..."
