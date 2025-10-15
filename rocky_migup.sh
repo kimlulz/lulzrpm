@@ -105,14 +105,15 @@ nineten(){
     becho "1. 🛠️ Download Prerequired Packages..."
 	echo ""
 		wget -r -l1 --no-parent -A "rocky*" $tenrepo
-		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./
+		mkdir ./tmp
+		mv ./download.rockylinux.org/pub/rocky/10/BaseOS/x86_64/os/Packages/r/* ./tmp
 		rm -rf ./download.rockylinux.org 
 		sleep 3 && clear
 	becho "🛠️ Install Prerequired Packages..."
 		#sudo cp -r /etc/yum.repos.d /etc/yum.repos.d.bak && sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/*.repo
 		sudo sed -i 's|$releasever|10|g' /etc/yum.repos.d/rocky.repo 
 		cat /etc/yum.repos.d/rocky.repo && sleep 5
-		sudo dnf -y install ./rocky-{gpg-keys,release,repos}-10.*.rpm
+		sudo dnf -y install ./tmp/rocky-{gpg-keys,release,repos}-10.*.rpm
 		sudo sed -i s/RPM-GPG-KEY-Rocky-9/RPM-GPG-KEY-Rocky-10/g /etc/yum.repos.d/rocky.repo
 		sudo dnf clean all && sudo dnf repolist
 		sleep 3 && clear
@@ -131,7 +132,7 @@ nineten(){
 		sudo dnf -y distro-sync
 		sudo rm -rf ./tmp
 		sudo sed -i 's|-10|-$releasever|g' /etc/yum.repos.d/rocky.repo 
-		sudo dnf -y install rocky-backgrounds gnome-extensions-app
+		sudo dnf -y install rocky-backgrounds gnome-extensions-app gnome-text-editor
 	#echo "🗑️ Remove order kernels..."
 		#cd /var/lib/rpm 
 		#sudo rm -f __db.00*
