@@ -125,6 +125,7 @@ nineten(){
 		sleep 3 && clear
 	echo "🔄️ Sync"
 		sudo dnf repolist -v
+		# will remove command below(one of the two below)
 		sudo dnf update -y --allowerasing
 		sudo dnf -y --releasever=10 --allowerasing --setopt=deltarpm=false distro-sync && echo ""
 		sleep 3 && clear
@@ -132,7 +133,7 @@ nineten(){
     becho "2. 🗑️ Remove older kernels and resolve dependencies"
 		sudo dnf -y autoremove && sudo dnf -y distro-sync
 		sudo rm -rf ./tmp
-		sudo sed -i 's|-10|-$releasever|g' /etc/yum.repos.d/rocky.repo 
+		sudo sed -i 's|/10|/$releasever|g' /etc/yum.repos.d/rocky.repo 
 		sudo dnf -y install sqlite rocky-backgrounds gnome-extensions-app gnome-text-editor
 		sudo dnf -y remove kernel-5* kernel-core-5* kernel-devel-5* kernel-header-5*
 		sudo rpm --rebuilddb
