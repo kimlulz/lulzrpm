@@ -244,9 +244,10 @@ becho "😎 Install Browser...?"
 	becho "*************************************************"
     becho "(1) Install Naver Whale (Chromium-based browser made by NAVER(Korea)" 
 	becho "(2) Install Chromium"
-    becho "(3) No, Just use Firefox"
+	becho "(3) Install Another Browser (Type)"
+    becho "(4) No, Just use Firefox"
     becho "*************************************************"
-    becho "[1/2/3] > " ; read IB
+    becho "[1/2/3/4] > " ; read IB
 	if [ $IB = "1" ]; then
         becho "🐋 Install Naver Whale..." && sleep 5
 		inswhale
@@ -254,6 +255,10 @@ becho "😎 Install Browser...?"
     elif [ $IB = "2" ]; then
         becho "🟢 Install chromium..." && sleep 5
         sudo dnf install -y chromium
+		echo ""
+	elif [ $IB = "3" ]; then
+        becho "Type Browser package-name > " ; read IBCUS
+        sudo dnf install -y $IBCUS
 		echo ""
     else
         echo "PASS"
