@@ -199,20 +199,22 @@ inswhale(){
 	elif [ "$el_ver" = "10" ]; then
 		becho "********************"
 		becho "Enterprise Linux (10) Detected"
-		becho "May not works on el10"
 		becho "********************"
-		sudo dnf install -y --enablerepo=epel --releasever=9 alien perl
+		sudo dnf install -y perl
+		sudo dnf install -y --enablerepo=crb debhelper dpkg rpm-build
+		wget https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/a/alien-8.95-14.el9.noarch.rpm
+		sudo rpm -Uvh --nodeps alien-8.95-14.el9.noarch.rpm #with nodeps opt, cuz it occured perl(:MODULE_COMPAT_5.32.1) error which it can igrone
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
+		sudo dnf install double-conversion qt5-filesystem qt5-qtbase \
+		qt5-qtbase-common qt5-qtbase-gui qt5-qtdeclarative qt6-filesystem \
+		qt6-qtbase qt6-qtbase-common qt6-qtbase-gui qt6-qtdeclarative qt6-qtsvg \
+		xcb-util-cursor xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm #deps for whale
 		sudo rpm -Uvh --force naver-*.rpm
 		sudo sed -i 's|Icon=naver-whale|Icon=/opt/naver/whale/product_logo_256.png|g' /usr/share/applications/naver-whale.desktop
-
 	else
-		becho "**********************************************************"
-		becho "************************!!SKIP!!**************************"
-		becho "Can't install some packages because of package dependencies"
-		becho "************************!!SKIP!!**************************"
-		becho "**********************************************************"
+		echo "Can't detect your distro"
+		echo "Pass..." 
 	fi
 }
 
