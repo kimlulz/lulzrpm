@@ -155,9 +155,7 @@ fini(){
 
 gogogo
 
-becho "💿🔍 Checking Distro.."
 sleep 3
-
 becho "💿🔍 Checking Distro.."
 fkredhat
 
