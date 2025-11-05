@@ -158,14 +158,14 @@ inszsh(){
 	becho "TYPE EXIT!!!!!"
 	becho "*********************************************"
 	zsh 
-	wget https://raw.githubusercontent.com/kimlulz/dotfiles/refs/heads/main/zsh/.zshrc
-	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc && mv .zshrc /home/$USER/.zshrc && echo ""
 	becho "🤔 Install Fonts"
 	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P /home/$USER/.local/share/fonts
 	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P /home/$USER/.local/share/fonts
 	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P /home/$USER/.local/share/fonts
 	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P /home/$USER/.local/share/fonts
 	fc-cache -f -v && echo ""
+	wget https://raw.githubusercontent.com/kimlulz/dotfiles/refs/heads/main/zsh/.zshrc
+	echo "fastfetch -c /home/$USER/.fastfetch/13.jsonc" >> .zshrc && mv .zshrc /home/$USER/.zshrc && echo ""
 	becho "*********************************************"
 	becho "[ZPlug]"
 	becho "Powerlevel10k Installed"
@@ -206,7 +206,7 @@ inswhale(){
 		sudo rpm -Uvh --nodeps alien-8.95-14.el9.noarch.rpm #with nodeps opt, cuz it occured perl(:MODULE_COMPAT_5.32.1) error which it can igrone
 		wget https://installer-whale.pstatic.net/downloads/installers/naver-whale-stable_amd64.deb
 		sudo alien -r naver-whale-stable_amd64.deb
-		sudo dnf install double-conversion qt5-filesystem qt5-qtbase \
+		sudo dnf install -y double-conversion qt5-filesystem qt5-qtbase \
 		qt5-qtbase-common qt5-qtbase-gui qt5-qtdeclarative qt6-filesystem \
 		qt6-qtbase qt6-qtbase-common qt6-qtbase-gui qt6-qtdeclarative qt6-qtsvg \
 		xcb-util-cursor xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm #deps for whale
@@ -266,7 +266,7 @@ becho "😎 Install Browser...?"
         fi
 
 becho "2. 🛠️ Install Fastfetch"
-	sudo dnf install fastfetch
+	sudo dnf install -y fastfetch
     cd ../../  && mkdir -p /home/$USER/.fastfetch && echo ""
 
 becho "3. 🧑‍💻 Install VSCode from MS YUM_Repo"
