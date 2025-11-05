@@ -71,16 +71,16 @@ eightnine(){
     echo -e "\033[31m"Upgrade AlmaLinux 8 to 9"\033[0m"
     becho "1. 🛠️ Change Repos to el9"
 	echo ""
-		wget -r -l1 --no-parent -A "almalinux*" $ninerepo
-		mkdir ./tmp
-		mv ./repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/* ./tmp
-		rm -rf ./repo.almalinux.org
+		wget -e robots=off -r -l2 -np -nH --cut-dirs=7 -A 'almalinux-*-9*.rpm' "$ninerepo"
+		mkdir -p ./tmp
+		mv almalinux-*-9*.rpm ./tmp/
 		clear && sleep 3
 	becho "🛠️ Install..."
 		sudo dnf -y install ./tmp/almalinux-{gpg-keys,release,repos}-9.*.rpm
 		clear && sleep 3
 	becho "🗑️ Remove Third-Party Repository"
 		sudo dnf -y remove rpmconf yum-utils epel-release elrepo-release
+		sudo rpm -e --nodeps iptables-ebtables #obsolete, replaced to iptables-nft
 		rm -rf /usr/share/redhat-logos
 		clear && sleep 3
 	echo ""
@@ -96,6 +96,7 @@ eightnine(){
 		rpm -e --nodeps  `rpm -qa|grep -i kernel|grep 4.18`
 	echo "🛠️ Resolve dependencies..."
 		dnf module disable -y perl container-tools llvm-toolset virt perl-IO-Socket-SSL perl-libwww-perl python36 perl-DBI perl-DBD-SQLite
+		dnf install -y iptables-nft
 	echo "⬆️ Update"
 		dnf update -y
 }
